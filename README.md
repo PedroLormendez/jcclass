@@ -1,9 +1,9 @@
 # Jenkinson - Collison automated gridded classification for Python
 This is an adapted version for python of the __Jenkinson - Collison__ automated classfication based on the original Lamb Weather Types. This gridded version is based on the application made by [Otero](https://link.springer.com/article/10.1007/s00382-017-3705-y) (2018) using a moving central gridded point with  that allows to compute the synoptic circulation types on a gridded Mean Sea Level Pressure (MSLP) domain.
-![](https://github.com/PedroLormendez/JC-Classification/blob/main/figs/Circulations_quick.gif)
+![](https://github.com/PedroLormendez/jc_module/blob/main/figs/Circulations_quick.gif)
 ## How does it work?
 The method uses grid-point MSLP data to obtain numerical values of wind flow and vorticity which can be used to determine Cyclonic and Anticyclonic patterns as well as their dominant advective (direction of wind flow) characteristics. The 16 gridded points are moved along the region in reference to a central point where the dominant circulation type will be designated.   
-![](https://github.com/PedroLormendez/JK-Classification-Beta/blob/main/figs/Gridpoints.gif)
+![](https://github.com/PedroLormendez/jc_module/blob/main/figs/Gridpoints.gif)
 ## Method and equations
 - __Westerly flow__
 
@@ -97,7 +97,7 @@ The current code has been has been tested for the following datasets:
 
 The method can be applied for any other netcdf files with latitude coordinates names as "latitude" or "lat", or longitudes coordinates as "longitude" or "lon" and MSLP coordinate names as "msl" or "psl".
 
-A sample dataset from ERA5 is provided and available [here](https://github.com/PedroLormendez/JC-Classification/tree/main/sample_data)
+Sample datasets from ERA5 is provided and available [here](https://github.com/PedroLormendez/jc_module/tree/main/sample_data)
 ## Installation
 Simply run in the terminal
 ```
@@ -110,7 +110,7 @@ Importing the module
 from jc_class import jc_class
 ```
 Starting the module.
-Sample dataset available [here](https://github.com/PedroLormendez/JC-Classification/tree/main/sample_data).
+Sample datasets available [here](https://github.com/PedroLormendez/jc_module/tree/main/sample_data).
 ```py
 jc = jc_class('filename.nc')
 ```
@@ -130,7 +130,7 @@ fig = jc.plot_cts(cts, *args)
 ```
 *cts: a 2D['lat','lon']  DataArray of the 27 CTs*  
 ** *args (lat_south=-80, lat_north=80, lon_west=-180, lon_east=180)*
-![](https://github.com/PedroLormendez/JC-Classification/blob/main/figs/plot_cts.png)
+![](https://github.com/PedroLormendez/jc_module/blob/main/figs/plot_cts.png)
 
 Plotting the circulation types and MSLP contour lines on a map
 ```py
@@ -143,7 +143,7 @@ fig = jc.plot_cts_mslp(cts, mslp, *args)
 *cts: a 2D['lat','lon']  DataArray of the 27 CTs*  
 *mslp: a 2D['lat','lon'] DataArray of MSLP*  
 ** *args (lat_south=-80, lat_north=80, lon_west=-180, lon_east=180)*  
-![](https://github.com/PedroLormendez/JC-Classification/blob/main/figs/plot_cts_mslp.png)
+![](https://github.com/PedroLormendez/jc_module/blob/main/figs/plot_cts_mslp.png)
 
 Plotting the circulation types and MSLP contour lines on a Nearside perspective cartopy projection
 ```py
@@ -156,7 +156,7 @@ fig = jc.plot_cts_globe(cts, mslp, *args)
 *cts: a 2D['lat','lon']  DataArray of the 27 CTs*  
 *mslp: a 2D['lat','lon'] DataArray of MSLP*  
 ** *args (lat_central=30, lon_central=0)*  
-![](https://github.com/PedroLormendez/JC-Classification/blob/main/figs/plot_cts_globe.png)
+![](https://github.com/PedroLormendez/jc_module/blob/main/figs/plot_cts_globe.png)
 
 
 ## Acknowledging this work

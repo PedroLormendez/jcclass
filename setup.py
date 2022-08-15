@@ -25,7 +25,7 @@ setup(
 	description = 'Jenkinson and Collison automated gridded classification',
 	long_description = long_description,
     long_description_content_type='text/markdown',	
-	url = 'https://github.com/PedroLormendez/JC-Classification',
+	url = 'https://github.com/PedroLormendez/jc_module',
 	license = 'MIT',
 	packages =['jc_class'],
 	zip_safe = False,

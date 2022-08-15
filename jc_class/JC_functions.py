@@ -6,6 +6,7 @@
 @Author: Pedro Herrera-Lormendez
 """
 #Importing neccesary modules
+import gc
 import numpy as np
 import pandas as pd
 import xarray as xr
@@ -197,6 +198,8 @@ def assign_lwt(F_i, Z_i, direction_i):
     :param         Z_i: xarry of Total Shear Vorticity term (Z)
     :param direction_i: xarray of Flow Direction
     '''
+
+    ### Hybrid Anticyclonic flows ###
     lwt = xr.where( (Z_i<0) & (direction_i=='NE'), 1, np.nan)    
     lwt = xr.where( (Z_i<0) & (direction_i=='E'),  2, lwt)
     lwt = xr.where( (Z_i<0) & (direction_i=='SE'), 3, lwt)
@@ -205,7 +208,7 @@ def assign_lwt(F_i, Z_i, direction_i):
     lwt = xr.where( (Z_i<0) & (direction_i=='W'),  6, lwt)
     lwt = xr.where( (Z_i<0) & (direction_i=='NW'), 7, lwt)
     lwt = xr.where( (Z_i<0) & (direction_i=='N'),  8, lwt)
-
+    ### Hybrid Cyclonic flows ###
     lwt = xr.where( (xr.ufuncs.fabs(Z_i)<F_i) & (direction_i=='NE'), 11, lwt)    
     lwt = xr.where( (xr.ufuncs.fabs(Z_i)<F_i) & (direction_i=='E'),  12, lwt)
     lwt = xr.where( (xr.ufuncs.fabs(Z_i)<F_i) & (direction_i=='SE'), 13, lwt)
@@ -214,10 +217,11 @@ def assign_lwt(F_i, Z_i, direction_i):
     lwt = xr.where( (xr.ufuncs.fabs(Z_i)<F_i) & (direction_i=='W'),  16, lwt)
     lwt = xr.where( (xr.ufuncs.fabs(Z_i)<F_i) & (direction_i=='NW'), 17, lwt)
     lwt = xr.where( (xr.ufuncs.fabs(Z_i)<F_i) & (direction_i=='N'),  18, lwt)
-
+    ### Purely Cyclonic ###
     lwt = xr.where( ( (xr.ufuncs.fabs(Z_i)) > (2*F_i) ) & (Z_i>0), 20, lwt)
+    ### Purely Anticyclonic ###
     lwt = xr.where( ( (xr.ufuncs.fabs(Z_i)) > (2*F_i) ) & (Z_i<0),  0, lwt)
-
+    ### Directional flows ###
     lwt = xr.where( (xr.ufuncs.fabs(Z_i)>F_i) & (xr.ufuncs.fabs(Z_i) < 2*F_i) & (Z_i>0) & (direction_i=='NE'), 21, lwt)    
     lwt = xr.where( (xr.ufuncs.fabs(Z_i)>F_i) & (xr.ufuncs.fabs(Z_i) < 2*F_i) & (Z_i>0) & (direction_i=='E'),  22, lwt)
     lwt = xr.where( (xr.ufuncs.fabs(Z_i)>F_i) & (xr.ufuncs.fabs(Z_i) < 2*F_i) & (Z_i>0) & (direction_i=='SE'), 23, lwt)
@@ -226,11 +230,10 @@ def assign_lwt(F_i, Z_i, direction_i):
     lwt = xr.where( (xr.ufuncs.fabs(Z_i)>F_i) & (xr.ufuncs.fabs(Z_i) < 2*F_i) & (Z_i>0) & (direction_i=='W'),  26, lwt)
     lwt = xr.where( (xr.ufuncs.fabs(Z_i)>F_i) & (xr.ufuncs.fabs(Z_i) < 2*F_i) & (Z_i>0) & (direction_i=='NW'), 27, lwt)
     lwt = xr.where( (xr.ufuncs.fabs(Z_i)>F_i) & (xr.ufuncs.fabs(Z_i) < 2*F_i) & (Z_i>0) & (direction_i=='N'),  28, lwt)
-
+    ### Low Flow / Unclassified / Weak Flow ###
     lwt = xr.where( (F_i<6) & (xr.ufuncs.fabs(Z_i) < 6), -1, lwt)
-    #lwt = -9 #Default value does not belong to any Circulation
 
-    return lwt,Z_i
+    return lwt
     
 def extracting_gridpoints_area(mslp, lat, lon):
     """
@@ -244,96 +247,128 @@ def extracting_gridpoints_area(mslp, lat, lon):
     lat1 = lat.sel(lat = lat1, method = 'nearest')        
     lon1 = lon.sel(lon = lon1, method = 'nearest')     
     p1 = np.array(mslp.sel(lat = lat1, lon = lon1))
+    del(lat1, lon1)
+    gc.collect()
     #Gridpoint 2
     lat2 = lat + 10
     lon2 = lon + 5
     lat2 = lat.sel(lat = lat2, method = 'nearest')        
     lon2 = lon.sel(lon = lon2, method = 'nearest')    
     p2 = np.array(mslp.sel(lat = lat2, lon = lon2))
+    del (lat2, lon2)
+    gc.collect()
     #Gridpoint 3
     lat3 = lat + 5
     lon3 = lon - 15
     lat3 = lat.sel(lat = lat3, method = 'nearest')        
     lon3 = lon.sel(lon = lon3, method = 'nearest')    
     p3 = np.array(mslp.sel(lat = lat3, lon = lon3))
+    del (lat3, lon3)
+    gc.collect()
     #Gridpoint 4
     lat4 = lat + 5
     lon4 = lon  -5
     lat4 = lat.sel(lat = lat4, method = 'nearest')        
     lon4 = lon.sel(lon = lon4, method = 'nearest')    
     p4 = np.array(mslp.sel(lat = lat4, lon = lon4))
+    del (lat4, lon4)
+    gc.collect()
     #Gridpoint 5
     lat5 = lat + 5
     lon5 = lon + 5
     lat5 = lat.sel(lat = lat5, method = 'nearest')        
     lon5 = lon.sel(lon = lon5, method = 'nearest')    
     p5 = np.array(mslp.sel(lat = lat5, lon = lon5))
+    del (lat5, lon5)
+    gc.collect()
     #Gridpoint 6
     lat6 = lat + 5
     lon6 = lon + 15
     lat6 = lat.sel(lat = lat6, method = 'nearest')        
     lon6 = lon.sel(lon = lon6, method = 'nearest')    
     p6 = np.array(mslp.sel(lat = lat6, lon = lon6))
+    del (lat6, lon6)
+    gc.collect()
     #Gridpoint 7
     lat7 = lat
     lon7 = lon - 15
     lat7 = lat.sel(lat = lat7, method = 'nearest')        
     lon7 = lon.sel(lon = lon7, method = 'nearest')    
     p7 = np.array(mslp.sel(lat = lat7, lon = lon7))
+    del (lat7, lon7)
+    gc.collect()
     #Gridpoint 8
     lat8 = lat
     lon8 = lon -5
     lat8 = lat.sel(lat = lat8, method = 'nearest')        
     lon8 = lon.sel(lon = lon8, method = 'nearest')    
     p8 = np.array(mslp.sel(lat = lat8, lon = lon8))
+    del (lat8, lon8)
+    gc.collect()
     #Gridpoint 9
     lat9 = lat
     lon9 = lon + 5
     lat9 = lat.sel(lat = lat9, method = 'nearest')        
     lon9 = lon.sel(lon = lon9, method = 'nearest')    
     p9 = np.array(mslp.sel(lat = lat9, lon = lon9))
+    del (lat9, lon9)
+    gc.collect()
     #Gridpoint 10
     lat10 = lat
     lon10 = lon + 15
     lat10 = lat.sel(lat = lat10, method = 'nearest')        
     lon10 = lon.sel(lon = lon10, method = 'nearest')    
     p10 = np.array(mslp.sel(lat = lat10, lon = lon10))
+    del (lat10, lon10)
+    gc.collect()
     #Gridpoint 11
     lat11 = lat - 5
     lon11 = lon - 15
     lat11 = lat.sel(lat = lat11, method = 'nearest')        
     lon11 = lon.sel(lon = lon11, method = 'nearest')    
     p11 = np.array(mslp.sel(lat = lat11, lon = lon11))
+    del (lat11, lon11)
+    gc.collect()
     #Gridpoint 12
     lat12 = lat - 5
     lon12 = lon - 5
     lat12 = lat.sel(lat = lat12, method = 'nearest')        
     lon12 = lon.sel(lon = lon12, method = 'nearest')    
     p12 = np.array(mslp.sel(lat = lat12, lon = lon12))
+    del (lat12, lon12)
+    gc.collect()
     #Gridpoint 13
     lat13 = lat - 5
     lon13 = lon + 5
     lat13 = lat.sel(lat = lat13, method = 'nearest')        
     lon13 = lon.sel(lon = lon13, method = 'nearest')    
     p13 = np.array(mslp.sel(lat = lat13, lon = lon13))
+    del (lat13, lon13)
+    gc.collect()
     #Gridpoint 14
     lat14 = lat - 5
     lon14 = lon + 15
     lat14 = lat.sel(lat = lat14, method = 'nearest')        
     lon14 = lon.sel(lon = lon14, method = 'nearest')    
     p14 = np.array(mslp.sel(lat = lat14, lon = lon14))
+    del (lat14, lon14)
+    gc.collect()
     #Gridpoint 15
     lat15 = lat - 10
     lon15 = lon - 5
     lat15 = lat.sel(lat = lat15, method = 'nearest')        
     lon15 = lon.sel(lon = lon15, method = 'nearest')    
     p15 = np.array(mslp.sel(lat = lat15, lon = lon15))
+    del (lat15, lon15)
+    gc.collect()
     #Gridpoint 16
     lat16 = lat - 10
     lon16 = lon + 5
     lat16 = lat.sel(lat = lat16, method = 'nearest')        
     lon16 = lon.sel(lon = lon16, method = 'nearest')    
     p16 = np.array(mslp.sel(lat = lat16, lon = lon16))
+    del (lat16, lon16)
+    gc.collect()
     return (p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16)
     
 def extracting_gridpoints_globe(mslp, lat, lon):
@@ -348,6 +383,8 @@ def extracting_gridpoints_globe(mslp, lat, lon):
     lat1 = lat.sel(lat = lat1, method = 'nearest')        
     lon1 = lon.sel(lon = lon1, method = 'nearest')    
     p1 = np.array(mslp.sel(lat = lat1, lon = lon1))
+    del (lat1, lon1)
+    gc.collect()
 
     #Gridpoint 2
     lat2 = lat + 10
@@ -356,6 +393,8 @@ def extracting_gridpoints_globe(mslp, lat, lon):
     lat2 = lat.sel(lat = lat2, method = 'nearest')        
     lon2 = lon.sel(lon = lon2, method = 'nearest')    
     p2 = np.array(mslp.sel(lat = lat2, lon = lon2))
+    del (lat2, lon2)
+    gc.collect()
 
     #Gridpoint 3
     lat3 = lat + 5
@@ -363,6 +402,8 @@ def extracting_gridpoints_globe(mslp, lat, lon):
     lat3 = lat.sel(lat = lat3, method = 'nearest')        
     lon3 = lon.sel(lon = lon3, method = 'nearest')    
     p3 = np.array(mslp.sel(lat = lat3, lon = lon3))
+    del (lat3, lon3)
+    gc.collect()    
 
     #Gridpoint 4
     lat4 = lat + 5
@@ -370,6 +411,8 @@ def extracting_gridpoints_globe(mslp, lat, lon):
     lat4 = lat.sel(lat = lat4, method = 'nearest')        
     lon4 = lon.sel(lon = lon4, method = 'nearest')    
     p4 = np.array(mslp.sel(lat = lat4, lon = lon4))
+    del (lat4, lon4)
+    gc.collect()    
 
     #Gridpoint 5
     lat5 = lat + 5
@@ -378,6 +421,8 @@ def extracting_gridpoints_globe(mslp, lat, lon):
     lat5 = lat.sel(lat = lat5, method = 'nearest')        
     lon5 = lon.sel(lon = lon5, method = 'nearest')    
     p5 = np.array(mslp.sel(lat = lat5, lon = lon5))
+    del (lat5, lon5)
+    gc.collect()    
 
     #Gridpoint 6
     lat6 = lat + 5
@@ -386,6 +431,8 @@ def extracting_gridpoints_globe(mslp, lat, lon):
     lat6 = lat.sel(lat = lat6, method = 'nearest')        
     lon6 = lon.sel(lon = lon6, method = 'nearest')    
     p6 = np.array(mslp.sel(lat = lat6, lon = lon6))
+    del (lat6, lon6)
+    gc.collect()    
 
     #Gridpoint 7
     lat7 = lat
@@ -393,6 +440,8 @@ def extracting_gridpoints_globe(mslp, lat, lon):
     lat7 = lat.sel(lat = lat7, method = 'nearest')        
     lon7 = lon.sel(lon = lon7, method = 'nearest')    
     p7 = np.array(mslp.sel(lat = lat7, lon = lon7))
+    del (lat7, lon7)
+    gc.collect()    
 
     #Gridpoint 8
     lat8 = lat
@@ -400,6 +449,8 @@ def extracting_gridpoints_globe(mslp, lat, lon):
     lat8 = lat.sel(lat = lat8, method = 'nearest')        
     lon8 = lon.sel(lon = lon8, method = 'nearest')    
     p8 = np.array(mslp.sel(lat = lat8, lon = lon8))
+    del (lat8, lon8)
+    gc.collect()    
 
     #Gridpoint 9
     lat9 = lat
@@ -408,6 +459,8 @@ def extracting_gridpoints_globe(mslp, lat, lon):
     lat9 = lat.sel(lat = lat9, method = 'nearest')        
     lon9 = lon.sel(lon = lon9, method = 'nearest')    
     p9 = np.array(mslp.sel(lat = lat9, lon = lon9))
+    del (lat9, lon9)
+    gc.collect()    
 
     #Gridpoint 10
     lat10 = lat
@@ -416,6 +469,8 @@ def extracting_gridpoints_globe(mslp, lat, lon):
     lat10 = lat.sel(lat = lat10, method = 'nearest')        
     lon10 = lon.sel(lon = lon10, method = 'nearest')    
     p10 = np.array(mslp.sel(lat = lat10, lon = lon10))
+    del (lat10, lon10)
+    gc.collect()    
 
     #Gridpoint 11
     lat11 = lat - 5
@@ -423,6 +478,8 @@ def extracting_gridpoints_globe(mslp, lat, lon):
     lat11 = lat.sel(lat = lat11, method = 'nearest')        
     lon11 = lon.sel(lon = lon11, method = 'nearest')    
     p11 = np.array(mslp.sel(lat = lat11, lon = lon11))
+    del (lat11, lon11)
+    gc.collect()        
 
     #Gridpoint 12
     lat12 = lat - 5
@@ -430,6 +487,8 @@ def extracting_gridpoints_globe(mslp, lat, lon):
     lat12 = lat.sel(lat = lat12, method = 'nearest')        
     lon12 = lon.sel(lon = lon12, method = 'nearest')    
     p12 = np.array(mslp.sel(lat = lat12, lon = lon12))
+    del (lat12, lon12)
+    gc.collect()        
 
     #Gridpoint 13
     lat13 = lat - 5 
@@ -438,6 +497,8 @@ def extracting_gridpoints_globe(mslp, lat, lon):
     lat13 = lat.sel(lat = lat13, method = 'nearest')        
     lon13 = lon.sel(lon = lon13, method = 'nearest')    
     p13 = np.array(mslp.sel(lat = lat13, lon = lon13))
+    del (lat13, lon13)
+    gc.collect()        
 
     #Gridpoint 14
     lat14 = lat - 5
@@ -446,6 +507,8 @@ def extracting_gridpoints_globe(mslp, lat, lon):
     lat14 = lat.sel(lat = lat14, method = 'nearest')        
     lon14 = lon.sel(lon = lon14, method = 'nearest')    
     p14 = np.array(mslp.sel(lat = lat14, lon = lon14))
+    del (lat14, lon14)
+    gc.collect()        
 
     #Gridpoint 15
     lat15 = lat - 10
@@ -453,6 +516,8 @@ def extracting_gridpoints_globe(mslp, lat, lon):
     lat15 = lat.sel(lat = lat15, method = 'nearest')        
     lon15 = lon.sel(lon = lon15, method = 'nearest')    
     p15 = np.array(mslp.sel(lat = lat15, lon = lon15))
+    del (lat15, lon15)
+    gc.collect()        
 
     #Gridpoint 16
     lat16 = lat - 10
@@ -461,6 +526,8 @@ def extracting_gridpoints_globe(mslp, lat, lon):
     lat16 = lat.sel(lat = lat16, method = 'nearest')        
     lon16 = lon.sel(lon = lon16, method = 'nearest')    
     p16 = np.array(mslp.sel(lat = lat16, lon = lon16))
+    del (lat16, lon16)
+    gc.collect()        
     
     return (p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16)
 

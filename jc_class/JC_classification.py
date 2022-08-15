@@ -6,6 +6,7 @@
 @Author: Pedro Herrera-Lormendez
 """
 
+import gc
 import numpy as np
 import pandas as pd
 import xarray as xr
@@ -42,7 +43,10 @@ def JC_classification(filename):
         except:
             pass            
         DS.close()
+        del DS
+        gc.collect()
           
+        mslp_dim_1 = mslp.dims[1]
         #Checking longitude coordinates to be - 180 to 180
         print('Checking if longitude coordinates are -180 to 180...')
         mslp = JC_functions.checking_lon_coords(mslp)
@@ -138,24 +142,30 @@ def JC_classification(filename):
             p14 = gridpoints[13]
             p15 = gridpoints[14]
             p16 = gridpoints[15]
-        # else:
-        #     raise TypeError("Incorrect answer! Only 'yes' and 'no' is allowed")                
-
+       
         print('Computing flow terms')
         #Computing equations of flows and vorticity                        
         flows = JC_functions.flows(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, sc, zwa, zsc, zwb, lat, lon, time, mslp)
+        del (mslp, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, sc, zwa, zsc, zwb)
+        gc.collect()
         W  = flows[0] #Westerly flow
         S  = flows[1] #Southerly flow
         F  = flows[2] #Resultant flow
         ZW = flows[3] #Westerly shear vorticity
         ZS = flows[4] #Southerly shear vorticity
-        Z  = flows[5] #Total shear vorticity            
+        Z  = flows[5] #Total shear vorticity
+
+        del flows
+        gc.collect()            
 
         print('Computing flow directions')
         #Computing the wind direction values          
         dd = np.arctan(W/S)
         deg = np.rad2deg(dd)
         deg=np.mod(180+np.rad2deg(np.arctan2(W, S)),360) 
+
+        del (W, S, ZW, ZS)
+        gc.collect()        
         #https://confluence.ecmwf.int/pages/viewpage.action?pageId=133262398 
         #Assigning the Wind Direction labels
         direction = JC_functions.direction_def_NH(deg)
@@ -163,18 +173,21 @@ def JC_classification(filename):
 
         print('Determining the Circulation types')
         #Determination of Circulation Type (27 Original types)
-        lwt = JC_functions.assign_lwt(F, Z, direction)[0]
+        lwt = JC_functions.assign_lwt(F, Z, direction)
+
+        del (F, Z, direction)
+        gc.collect()
         
         #Storing the gridded Circulation Types in an xarray file
         print('Saving the data in an xarray format')
-        if (mslp.dims[1] == 'latitude') or (mslp.dims[1] == 'lat'):
+        if (mslp_dim_1 == 'latitude') or (mslp_dim_1 == 'lat'):
             output=xr.DataArray(data = lwt.values,
                 coords = {'time': time,
                         'lat': lat_list, 
                         'lon': lon_list},
                         dims = ['time', 'lat', 'lon'])
             output.name = 'CT' #Assigning variable name
-        elif mslp.dims[1] == 'number':
+        elif mslp_dim_1 == 'number':
             output=xr.DataArray(data = lwt.values,
                 coords = {'time': time,
                           'number':mslp.number,
@@ -192,13 +205,8 @@ def JC_classification(filename):
             output.attrs = {
                 'description':'Gridded Lamb circulation types derived from MSLP data based on the automated Jenkinson-Collison classification'}
         output = JC_functions.checking_lat_coords(output)
-        # order_lats = lat_list[0] - lat_list[-1]
-        # if order_lats < 0:
-        #     output = output.reindex(lat=list(reversed(output.lat)))
-        # else:
-        #     output = output        
+       
         print('The End!')
-                # 'citation'
 
 
     else:

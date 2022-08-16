@@ -2,4 +2,4 @@
 __pycache__/
 !/.gitignore
 dist/
-jc_classification.egg-info/
+jcclass.egg-info/

@@ -7,7 +7,7 @@ from setuptools import find_packages, setup
 vfile = {}
 exec(open('jcclass/version.py').read(), vfile)
 
-with open('docs/README_pypi.md', 'r') as fh:
+with open('README.md', 'r') as fh:
 	long_description = fh.read()
 
 #with open('jc_class/requirements.txt', 'r') as fh:
@@ -16,6 +16,7 @@ with open('docs/README_pypi.md', 'r') as fh:
 
 setup(
 	name='jcclass',
+	#version = '0.0.2',
 	include_package_data = True,
 	keywords='circulations, CTs, WTs, synoptic',
 	author = 'Pedro Herrera-Lormendez',

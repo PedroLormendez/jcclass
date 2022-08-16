@@ -9,18 +9,14 @@
 import numpy as np
 import pandas as pd
 import xarray as xr
-#Importing the directory where the neccesary functions are located
-#import JC_functions
-#import JC_classification
-#import CTs_functions
-#import CTs_plots
-from jc_class import JC_functions #Functions that help compute the CTs
-from jc_class import JC_classification
-from jc_class import CTs_functions
-from jc_class import CTs_plots
+
+from jcclass import JC_functions #Functions that help compute the CTs
+from jcclass import JC_classification
+from jcclass import CTs_functions
+from jcclass import CTs_plots
 
 
-class jc_class:
+class jcclass:
     """
     This computes the gridded Lamb Weather Types
     using the Jenkinson-Collison automated classification

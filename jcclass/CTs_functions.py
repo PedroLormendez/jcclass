@@ -9,14 +9,6 @@
 import numpy as np
 import pandas as pd
 import xarray as xr
-import matplotlib.pyplot as plt
-#from mpl_toolkits.basemap import Basemap
-import cftime
-from matplotlib import cm
-from matplotlib.colors import ListedColormap, LinearSegmentedColormap
-import matplotlib.colors as colors
-from matplotlib.patches import Patch
-from matplotlib.lines import Line2D
 
 def eleven_CTs(CT):
     '''

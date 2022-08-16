@@ -101,18 +101,18 @@ Sample datasets from ERA5 is provided and available [here](https://github.com/Pe
 ## Installation
 Simply run in the terminal
 ```
-pip install -i https://test.pypi.org/simple/ jc-classification
+pip install -i https://test.pypi.org/simple/ jcclass
 ```
 
 ## How to use?
 __Importing the module__
 ```py
-from jc_class import jc_class
+from jcclass import jcclass
 ```
 __Starting the module__  
 Sample datasets available [here](https://github.com/PedroLormendez/jc_module/tree/main/sample_data).
 ```py
-jc = jc_class('filename.nc')
+jc = jcclass('filename.nc')
 ```
 __Computing the automated circulation types based on gridded MSLP__
 ```py

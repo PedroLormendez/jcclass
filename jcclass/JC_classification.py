@@ -11,7 +11,7 @@ import numpy as np
 import pandas as pd
 import xarray as xr
 #Importing the directory where the neccesary functions are located
-from jc_class import JC_functions #Functions that help compute the CTs
+from jcclass import JC_functions #Functions that help compute the CTs
 
 def JC_classification(filename):
     
@@ -74,6 +74,8 @@ def JC_classification(filename):
         lat = psl_area.lat
         lon = psl_area.lon
         time = psl_area.time.values
+        del psl_area
+        gc.collect()
         time_len = len(time)
         lon_list = list(lon)
         lat_list = list(lat)

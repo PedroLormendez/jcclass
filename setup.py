@@ -5,7 +5,7 @@ from setuptools import find_packages, setup
 '''
 
 vfile = {}
-exec(open('jc_class/version.py').read(), vfile)
+exec(open('jcclass/version.py').read(), vfile)
 
 with open('docs/README_pypi.md', 'r') as fh:
 	long_description = fh.read()
@@ -15,7 +15,7 @@ with open('docs/README_pypi.md', 'r') as fh:
 
 
 setup(
-	name='jc_classification',
+	name='jcclass',
 	include_package_data = True,
 	keywords='circulations, CTs, WTs, synoptic',
 	author = 'Pedro Herrera-Lormendez',
@@ -25,10 +25,10 @@ setup(
     long_description_content_type='text/markdown',	
 	url = 'https://github.com/PedroLormendez/jc_module',
 	license = 'MIT',
-	packages =['jc_class'],
+	packages =['jcclass'],
 	zip_safe = False,
 	python_requires='>=3.6',
-	version_config ={
+	setuptools_git_versioning ={
 		'version_callback' : vfile['__version__'],
 		'dev_template'  : '{tag}.posst{ccount}',
 		'dirty_template': '{tag}.post{ccount}'

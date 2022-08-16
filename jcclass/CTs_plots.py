@@ -21,8 +21,8 @@ import cartopy.crs as ccrs
 from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
 import matplotlib.ticker as mticker
 
-from jc_class import JC_functions
-from jc_class import CTs_functions
+from jcclass import JC_functions
+from jcclass import CTs_functions
 
 def plot_CT(CT, lat_south=-80, lat_north=80, lon_west=-180, lon_east=180):
     '''

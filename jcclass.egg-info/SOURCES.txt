@@ -1,0 +1,15 @@
+README.md
+setup.py
+jcclass/CTs_functions.py
+jcclass/CTs_plots.py
+jcclass/JC_classification.py
+jcclass/JC_functions.py
+jcclass/__init__.py
+jcclass/jcclass.py
+jcclass/version.py
+jcclass.egg-info/PKG-INFO
+jcclass.egg-info/SOURCES.txt
+jcclass.egg-info/dependency_links.txt
+jcclass.egg-info/not-zip-safe
+jcclass.egg-info/requires.txt
+jcclass.egg-info/top_level.txt

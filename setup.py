@@ -2,14 +2,12 @@ from setuptools import find_packages, setup
 
 '''
 @Author: Pedro Herrera-Lormendez
-Run the following code in your conda environment to make the package available
-$python setup.py
 '''
 
 vfile = {}
 exec(open('jc_class/version.py').read(), vfile)
 
-with open('README.md', 'r') as fh:
+with open('docs/README_pypi.md', 'r') as fh:
 	long_description = fh.read()
 
 #with open('jc_class/requirements.txt', 'r') as fh:

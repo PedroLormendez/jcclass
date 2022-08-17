@@ -1,0 +1,16 @@
+name: jcclass
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python>3.5
+  - numpy
+  - matplotlib
+  - xarray
+  - cartopy=0.18.0
+  - cftime
+  - netCDF4
+
+  - pip:
+#    - git+https://github.com/bashtage/sphinx-material.git
+    - jcclass

@@ -16,7 +16,7 @@ from jcclass import CTs_functions
 from jcclass import CTs_plots
 
 
-class jcclass:
+class jc:
     """
     This computes the gridded Lamb Weather Types
     using the Jenkinson-Collison automated classification
@@ -31,7 +31,7 @@ class jcclass:
     mslp      : A 2D ['lat', 'lon'] DataArray
         Mean Sea Level Pressure dataset in Pa
 
-    *args
+    *kwargs
     lat_south  : int
         Northernmost latitude value (-90 to 90)
     lat_north  : int
@@ -40,6 +40,7 @@ class jcclass:
         Westernmost longitude value (-180 to 180)
     lon_east   : int
         Easternmost latitude value (-180 to 180)
+    **kwargsglobe        
     lat_central: int
         Central latitude of plot (-90 to 90)
     lon_central: int  
@@ -81,24 +82,24 @@ class jcclass:
         cts_11 = CTs_functions.eleven_CTs(cts)
         return(cts_11)
     @staticmethod
-    def plot_cts(cts, *args):
+    def plot_cts(cts, **kwargs):
         '''
         Plots the circulation types over a region. 
         Default area globe
         '''
-        fig = CTs_plots.plot_CT(cts, *args)
+        fig = CTs_plots.plot_CT(cts, **kwargs)
         return(fig)
     @staticmethod
-    def plot_cts_mslp(cts, mslp, *args):
+    def plot_cts_mslp(cts, mslp, **kwargs):
         '''
         Plots the circulations types and the 
         contour lines of MSLP over a region.
         Default area globe
         '''
-        fig = CTs_plots.plot_CT_MSLP(cts, mslp, *args)
+        fig = CTs_plots.plot_CT_MSLP(cts, mslp, **kwargs)
         return(fig)
     @staticmethod    
-    def plot_cts_globe(cts, mslp, *args):
+    def plot_cts_globe(cts, mslp, **kwargsglobe):
         '''
         Plots the circulation types and MSLP contour lines
         over the Globe using the NearsidePerspective projection

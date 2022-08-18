@@ -7,7 +7,7 @@ dependencies:
   - numpy
   - matplotlib
   - xarray
-  - cartopy=0.18.0
+  - cartopy=0.17.0
   - cftime
   - netCDF4
 

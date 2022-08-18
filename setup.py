@@ -40,8 +40,7 @@ setup(
 						'numpy>=1.19.2',
 						'xarray>=0.16.2',
 						'matplotlib>=3.2.0',
-						#'cartopy>=0.17.0',
-						'cartopy',
+						'cartopy>=0.17.0',
 						'cftime',
 						'netCDF4'
 	]

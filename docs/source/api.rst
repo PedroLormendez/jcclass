@@ -2,6 +2,6 @@ API
 ===
 
 .. autosummary::
-   :toctree: generated
+   :toctree: _autosummary
 
-   jcclass.jcclass.jc
+   jcclass.jc

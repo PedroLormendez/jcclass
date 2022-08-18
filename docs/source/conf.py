@@ -55,7 +55,7 @@ html_theme_options = {
     'display_version': True,
 
     # Set you GA account ID to enable tracking
-    #'google_analytics_account': 'XXX',
+    'google_analytics_account': 'UA-43742712-1',
 
     # Specify a base_url used to generate sitemap.xml. If not
     # specified, then no sitemap will be built.

@@ -24,21 +24,21 @@ release = vfile['__version__']
 # -- General configuration
 
 extensions = [
-    'sphinx.ext.duration',
-    'sphinx.ext.doctest',
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
-    'sphinx.ext.intersphinx',
     'sphinx.ext.napoleon',
 ]
 
 autosummary_generate = True
-templates_path = ['_templates']
 
-intersphinx_mapping = {
-    'python': ('https://docs.python.org/3/', None),
-    'sphinx': ('https://www.sphinx-doc.org/en/master/', None),
-}
+templates_path = ['_templates']
+exclude_patterns = []
+
+
+#intersphinx_mapping = {
+    # 'python': ('https://docs.python.org/3/', None),
+    # 'sphinx': ('https://www.sphinx-doc.org/en/master/', None),
+#}
 #intersphinx_disabled_domains = ['std']
 
 
@@ -46,6 +46,8 @@ intersphinx_mapping = {
 # -- Options for HTML output
 
 html_theme = 'sphinx_rtd_theme'
+html_static_path = ['_static']
+
 html_theme_options = {
 
     # Set the name of the project to appear in the navigation.

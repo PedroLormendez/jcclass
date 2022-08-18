@@ -22,7 +22,7 @@ Computation
 
 :math:`W = \frac{1}{2}(P_12 + P_13) -  \frac{1}{2}(P_4 + P5)`
 
-   
+
 - Southerly flow
 
 :math:`S = sc[\frac{1}{4}(P_5 + 2P_9 + P_{13}) - \frac{1}{4}(P_4 + 2P_8 + P_{12})]`
@@ -67,18 +67,18 @@ The rules to define the appropiate Circulation Type (Lamb weather type) are:
 
 5. If :math:`F < 6` and :math:`|Z| < 6`, there is light indeterminate flow, corresponding to Lamb's unclassified type, represented here as Low Flow type (LF).
 
-Detailed method in `Jones et al. (1993) <https://rmets.onlinelibrary.wiley.com/doi/10.1002/joc.3370130606>`_ and `Otero et al. (2018) <https://link.springer.com/article/10.1007/s00382-017-3705-y>`_. 
+Detailed method in `Jones et al. (1993) <https://rmets.onlinelibrary.wiley.com/doi/10.1002/joc.3370130606>`_ and `Otero et al. (2018) <https://link.springer.com/article/10.1007/s00382-017-3705-y>`_.
 
-The Circulation Types (CTs) 
+The Circulation Types (CTs)
 ------------
-The application of the automated classification allows to derive 27 synoptic circulations. 26 of them based on the dominant pressure pattern and wind direction plus a Low Flow (LF). This last CT is characterised by days when pressure gradients are to weak and a dominant circulation or advective direction can not be assigned.  
+The application of the automated classification allows to derive 27 synoptic circulations. 26 of them based on the dominant pressure pattern and wind direction plus a Low Flow (LF). This last CT is characterised by days when pressure gradients are to weak and a dominant circulation or advective direction can not be assigned.
 
 The names, abreviations and corresnding code for the CTs is as follows:
 
 +---------------------------+-----------+------+-------------+-----------+------+----------------------+-----------+------+
 |    Name                   |Abreviation|Coding|  Name       |Abreviation|Coding|  Name                |Abreviation|Coding|
 +===========================+===========+======+=============+===========+======+======================+===========+======+
-|Low Flow                   | LF        | -1   |      --     |     --    |  --  |       --             |   --      |    --|              
+|Low Flow                   | LF        | -1   |      --     |     --    |  --  |       --             |   --      |    --|
 +---------------------------+-----------+------+-------------+-----------+------+----------------------+-----------+------+
 |Anticyclonic               | A         | 0    |    --       |      --   | --   |Cyclonic              | C         | 20   |
 +---------------------------+-----------+------+-------------+-----------+------+----------------------+-----------+------+
@@ -97,7 +97,7 @@ The names, abreviations and corresnding code for the CTs is as follows:
 |Anticyclonic Northwesterly | ANW       | 7    |Northwesterly| NW        | 17   |Cyclonic Northwesterly| CNW       | 27   |
 +---------------------------+-----------+------+-------------+-----------+------+----------------------+-----------+------+
 |Anticyclonic Northerly     | AN        | 8    |Northerly    | N         | 18   |Cyclonic Northerly    | CN        | 28   |
-+---------------------------+-----------+------+-------------+-----------+------+----------------------+-----------+------+  
++---------------------------+-----------+------+-------------+-----------+------+----------------------+-----------+------+
 
 The original 27 circulations can be reduced to a set of 11 patterns based on their dominant advection (wind direction), e.g., A previously AE, E and CE would merge into an Easterly (E).
 The names, abreviations and corresponding codes are as follows:
@@ -131,13 +131,13 @@ The names, abreviations and corresponding codes are as follows:
 Working datasets
 ------------
 
-The current code has been tested and works for the following datasets:  
+The current code has been tested and works for the following datasets:
 
 - `ERA5 Reanalysis <https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/era5>`_.
 
-- `NOAA 20th Century Reanalysis (V3) <https://psl.noaa.gov/data/gridded/data.20thC_ReanV3.html>`_. 
+- `NOAA 20th Century Reanalysis (V3) <https://psl.noaa.gov/data/gridded/data.20thC_ReanV3.html>`_.
 
-- `Global Climate Models from the Coupled Model Intercomparison Project CMIP6 <https://esgf-node.llnl.gov/projects/cmip6/>`_. 
+- `Global Climate Models from the Coupled Model Intercomparison Project CMIP6 <https://esgf-node.llnl.gov/projects/cmip6/>`_.
 
 The **jcclass** can be applied for any other netcdf files with latitude, longitude coordinates named as "lat", "latitude", "lon", "longitude" and MSLP coordinate names as "msl" or "psl".
 
@@ -151,9 +151,16 @@ the :ref:`installation` procedure.
    This project is under active development.
 
 Documentation
---------
+-------------
 
 .. toctree::
    installation
    tutorial
    api
+
+ Indices and tables
+ ------------------
+
+ * :ref:`genindex`
+ * :ref:`modindex`
+ * :ref:`search`

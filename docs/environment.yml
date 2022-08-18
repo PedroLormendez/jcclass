@@ -11,6 +11,6 @@ dependencies:
   - cftime
   - netCDF4
 
-  - pip:
+  #- pip:
 #    - git+https://github.com/bashtage/sphinx-material.git
-    - jcclass
+    #- jcclass

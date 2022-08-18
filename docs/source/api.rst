@@ -4,4 +4,4 @@ API
 .. autosummary::
    :toctree: generated
 
-   jcclass
+   jcclass.jcclass.jc

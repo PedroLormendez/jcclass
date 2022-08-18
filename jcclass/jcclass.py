@@ -60,7 +60,7 @@ class jc:
     plot_cts_mslp(cts, mslp, *args)
         Plots the reduced eleven CTs and MSLP contour lines.
 
-    plot_cts_globe(cts, mslp, lat_central=30, lon_central=0)
+    plot_cts_globe(cts, mslp, *argsglobe)
         Plots the reduced eleven CTs and MSLP contour lines 
         using a NearsidePerspective projection.
 

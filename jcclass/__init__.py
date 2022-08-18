@@ -1,1 +1,1 @@
-from .jcclass import jcclass
+from .jcclass import jc

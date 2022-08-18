@@ -79,7 +79,7 @@ def checking_lat_coords(data):
     This function checks and fixes the latitude coordinate
     values to go in incremental values (e.g., -80 to 80ºN)
 
-    :param mslp: mean sea level pressure data in xarray format
+    :param mslp: mean sea level pressure data in DataArray format
     """
     if data.lat[0] > data.lat[-1]:
         data = data.reindex(lat = list(reversed(data.lat)))
@@ -92,7 +92,7 @@ def checking_lon_coords(data):
     This function checks and fixes the longitude coordinate
     values going from 180 to -180 º.
     
-    :param mslp: mean sea level pressure data in xarray format
+    :param mslp: mean sea level pressure data in DataArray format
     """
     lon_name = 'lon'
     if data[lon_name][-1] > 180:

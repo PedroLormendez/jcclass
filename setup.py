@@ -24,11 +24,11 @@ setup(
 	description = 'Jenkinson and Collison automated gridded classification',
 	long_description = long_description,
     long_description_content_type='text/markdown',	
-	url = 'https://github.com/PedroLormendez/jc_module',
+	url = 'https://github.com/PedroLormendez/jcclass',
 	license = 'MIT',
 	packages =['jcclass'],
 	zip_safe = False,
-	python_requires='>=3.6',
+	python_requires='>=3.5',
 	setuptools_git_versioning ={
 		'version_callback' : vfile['__version__'],
 		'dev_template'  : '{tag}.posst{ccount}',

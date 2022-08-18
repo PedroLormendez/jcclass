@@ -29,16 +29,19 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
     'sphinx.ext.intersphinx',
+    'sphinx.ext.napoleon',
 ]
 
+autosummary_generate = True
+templates_path = ['_templates']
 
 intersphinx_mapping = {
     'python': ('https://docs.python.org/3/', None),
     'sphinx': ('https://www.sphinx-doc.org/en/master/', None),
 }
-intersphinx_disabled_domains = ['std']
+#intersphinx_disabled_domains = ['std']
 
-templates_path = ['_templates']
+
 
 # -- Options for HTML output
 
@@ -47,6 +50,7 @@ html_theme_options = {
 
     # Set the name of the project to appear in the navigation.
     'nav_title': 'JCclass',
+    'display_version': True,
 
     # Set you GA account ID to enable tracking
     #'google_analytics_account': 'XXX',
@@ -54,6 +58,9 @@ html_theme_options = {
     # Specify a base_url used to generate sitemap.xml. If not
     # specified, then no sitemap will be built.
     'base_url': 'https://github.com/PedroLormendez/jcclass',
+    'theme_color': 'green-grey',
+    'color_primary': 'green-grey',
+    'color_accent': 'white',
     # Set the repo location to get a badge with stats
     'repo_url': 'https://github.com/PedroLormendez/jcclass',
     'repo_name': 'JCclass',

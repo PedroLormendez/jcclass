@@ -26,7 +26,8 @@ setup(
     long_description_content_type='text/markdown',	
 	url = 'https://github.com/PedroLormendez/jcclass',
 	license = 'MIT',
-	packages =['jcclass'],
+	#packages =['jcclass'],
+	packages=find_packages(),
 	zip_safe = False,
 	python_requires='>=3.5',
 	setuptools_git_versioning ={

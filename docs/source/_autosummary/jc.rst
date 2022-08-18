@@ -1,7 +1,7 @@
-jcclass.jc
+jc
 ==============
 
-.. currentmodule:: jcclass
+.. currentmodule:: jc
 
 .. autoclass:: jc
    :members:

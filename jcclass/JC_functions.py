@@ -209,29 +209,29 @@ def assign_lwt(F_i, Z_i, direction_i):
     lwt = xr.where( (Z_i<0) & (direction_i=='NW'), 7, lwt)
     lwt = xr.where( (Z_i<0) & (direction_i=='N'),  8, lwt)
     ### Hybrid Cyclonic flows ###
-    lwt = xr.where( (xr.ufuncs.fabs(Z_i)<F_i) & (direction_i=='NE'), 11, lwt)    
-    lwt = xr.where( (xr.ufuncs.fabs(Z_i)<F_i) & (direction_i=='E'),  12, lwt)
-    lwt = xr.where( (xr.ufuncs.fabs(Z_i)<F_i) & (direction_i=='SE'), 13, lwt)
-    lwt = xr.where( (xr.ufuncs.fabs(Z_i)<F_i) & (direction_i=='S'),  14, lwt)
-    lwt = xr.where( (xr.ufuncs.fabs(Z_i)<F_i) & (direction_i=='SW'), 15, lwt)
-    lwt = xr.where( (xr.ufuncs.fabs(Z_i)<F_i) & (direction_i=='W'),  16, lwt)
-    lwt = xr.where( (xr.ufuncs.fabs(Z_i)<F_i) & (direction_i=='NW'), 17, lwt)
-    lwt = xr.where( (xr.ufuncs.fabs(Z_i)<F_i) & (direction_i=='N'),  18, lwt)
+    lwt = xr.where( (np.absolute(Z_i)<F_i) & (direction_i=='NE'), 11, lwt)    
+    lwt = xr.where( (np.absolute(Z_i)<F_i) & (direction_i=='E'),  12, lwt)
+    lwt = xr.where( (np.absolute(Z_i)<F_i) & (direction_i=='SE'), 13, lwt)
+    lwt = xr.where( (np.absolute(Z_i)<F_i) & (direction_i=='S'),  14, lwt)
+    lwt = xr.where( (np.absolute(Z_i)<F_i) & (direction_i=='SW'), 15, lwt)
+    lwt = xr.where( (np.absolute(Z_i)<F_i) & (direction_i=='W'),  16, lwt)
+    lwt = xr.where( (np.absolute(Z_i)<F_i) & (direction_i=='NW'), 17, lwt)
+    lwt = xr.where( (np.absolute(Z_i)<F_i) & (direction_i=='N'),  18, lwt)
     ### Purely Cyclonic ###
-    lwt = xr.where( ( (xr.ufuncs.fabs(Z_i)) > (2*F_i) ) & (Z_i>0), 20, lwt)
+    lwt = xr.where( ( (np.absolute(Z_i)) > (2*F_i) ) & (Z_i>0), 20, lwt)
     ### Purely Anticyclonic ###
-    lwt = xr.where( ( (xr.ufuncs.fabs(Z_i)) > (2*F_i) ) & (Z_i<0),  0, lwt)
+    lwt = xr.where( ( (np.absolute(Z_i)) > (2*F_i) ) & (Z_i<0),  0, lwt)
     ### Directional flows ###
-    lwt = xr.where( (xr.ufuncs.fabs(Z_i)>F_i) & (xr.ufuncs.fabs(Z_i) < 2*F_i) & (Z_i>0) & (direction_i=='NE'), 21, lwt)    
-    lwt = xr.where( (xr.ufuncs.fabs(Z_i)>F_i) & (xr.ufuncs.fabs(Z_i) < 2*F_i) & (Z_i>0) & (direction_i=='E'),  22, lwt)
-    lwt = xr.where( (xr.ufuncs.fabs(Z_i)>F_i) & (xr.ufuncs.fabs(Z_i) < 2*F_i) & (Z_i>0) & (direction_i=='SE'), 23, lwt)
-    lwt = xr.where( (xr.ufuncs.fabs(Z_i)>F_i) & (xr.ufuncs.fabs(Z_i) < 2*F_i) & (Z_i>0) & (direction_i=='S'),  24, lwt)
-    lwt = xr.where( (xr.ufuncs.fabs(Z_i)>F_i) & (xr.ufuncs.fabs(Z_i) < 2*F_i) & (Z_i>0) & (direction_i=='SW'), 25, lwt)
-    lwt = xr.where( (xr.ufuncs.fabs(Z_i)>F_i) & (xr.ufuncs.fabs(Z_i) < 2*F_i) & (Z_i>0) & (direction_i=='W'),  26, lwt)
-    lwt = xr.where( (xr.ufuncs.fabs(Z_i)>F_i) & (xr.ufuncs.fabs(Z_i) < 2*F_i) & (Z_i>0) & (direction_i=='NW'), 27, lwt)
-    lwt = xr.where( (xr.ufuncs.fabs(Z_i)>F_i) & (xr.ufuncs.fabs(Z_i) < 2*F_i) & (Z_i>0) & (direction_i=='N'),  28, lwt)
+    lwt = xr.where( (np.absolute(Z_i)>F_i) & (np.absolute(Z_i) < 2*F_i) & (Z_i>0) & (direction_i=='NE'), 21, lwt)    
+    lwt = xr.where( (np.absolute(Z_i)>F_i) & (np.absolute(Z_i) < 2*F_i) & (Z_i>0) & (direction_i=='E'),  22, lwt)
+    lwt = xr.where( (np.absolute(Z_i)>F_i) & (np.absolute(Z_i) < 2*F_i) & (Z_i>0) & (direction_i=='SE'), 23, lwt)
+    lwt = xr.where( (np.absolute(Z_i)>F_i) & (np.absolute(Z_i) < 2*F_i) & (Z_i>0) & (direction_i=='S'),  24, lwt)
+    lwt = xr.where( (np.absolute(Z_i)>F_i) & (np.absolute(Z_i) < 2*F_i) & (Z_i>0) & (direction_i=='SW'), 25, lwt)
+    lwt = xr.where( (np.absolute(Z_i)>F_i) & (np.absolute(Z_i) < 2*F_i) & (Z_i>0) & (direction_i=='W'),  26, lwt)
+    lwt = xr.where( (np.absolute(Z_i)>F_i) & (np.absolute(Z_i) < 2*F_i) & (Z_i>0) & (direction_i=='NW'), 27, lwt)
+    lwt = xr.where( (np.absolute(Z_i)>F_i) & (np.absolute(Z_i) < 2*F_i) & (Z_i>0) & (direction_i=='N'),  28, lwt)
     ### Low Flow / Unclassified / Weak Flow ###
-    lwt = xr.where( (F_i<6) & (xr.ufuncs.fabs(Z_i) < 6), -1, lwt)
+    lwt = xr.where( (F_i<6) & (np.absolute(Z_i) < 6), -1, lwt)
 
     return lwt
     

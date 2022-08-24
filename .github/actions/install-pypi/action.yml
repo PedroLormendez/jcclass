@@ -37,9 +37,9 @@ runs:
       shell: bash
       run: sudo apt-get install libgeos-dev
 
-    - name: Install libroj-dev
-      shell: bash
-      run: sudo apt-get install libproj-dev
+#    - name: Install libroj-dev
+#      shell: bash
+#      run: sudo apt-get install libproj-dev
 
     - name: Disable Shapely Wheels
       shell: bash

@@ -34,7 +34,6 @@ runs:
     - name: Update environment
       shell: bash
       run: |
-#        export CFLAGS="-I/usr/local/include"
         echo "CPATH=$CPATH:$GITHUB_WORKSPACE/local/include" >> $GITHUB_ENV
         echo "LIBRARY_PATH=$LIBRARY_PATH:$GITHUB_WORKSPACE/local/lib" >> $GITHUB_ENV
         echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$GITHUB_WORKSPACE/local/lib" >> $GITHUB_ENV

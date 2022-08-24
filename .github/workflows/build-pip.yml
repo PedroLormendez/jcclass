@@ -26,6 +26,13 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
+      - name: Install from PypI
+        uses: ./.github/actions/install-pypi
+        with:
+          need-cartopy: ${{ matrix.no-extras != 'No Extras' }}
+          type: 'test'
+          version-file: ${{ matrix.dep-versions }}
+          python-version:  ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip

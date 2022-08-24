@@ -8,9 +8,10 @@ dependencies:
   - numpy>=1.21.6
   - matplotlib
   - xarray
-  - cartopy>=0.17.0
+  - cartopy=0.18.0
   - cftime
   - netCDF4
+  - h5netcdf
 
   #- pip:
 #    - git+https://github.com/bashtage/sphinx-material.git

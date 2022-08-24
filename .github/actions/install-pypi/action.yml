@@ -43,7 +43,7 @@ runs:
 
     - name: Install dependencies
       shell: bash
-      run: python -m pip install -r requirements.txt -c ci/${{ inputs.version-file }}
+      run: python -m pip install -r requirements.txt #-c ci/${{ inputs.version-file }}
 
 #    - name: Install extra dependencies
 #      if: ${{ inputs.need-cartopy == 'true' }}

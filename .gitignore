@@ -1,10 +1,10 @@
 .*
 __pycache__/
-ci/download_cartopy_maps.py
+ci/*
 !/.gitignore
-.github/actions/install-pypi
-.github/actions/setup-proj
-.github/workflows/build-pip.yml
+#.github/actions/install-pypi
+#.github/actions/setup-proj
+#.github/workflows/build-pip.yml
 !/.readthedocs.yaml
 dist/
 jcclass.egg-info/

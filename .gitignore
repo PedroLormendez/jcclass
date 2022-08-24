@@ -2,6 +2,7 @@
 __pycache__/
 ci/*
 !/.gitignore
+!.github/
 #.github/actions/install-pypi
 #.github/actions/setup-proj
 #.github/workflows/build-pip.yml

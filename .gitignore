@@ -3,5 +3,5 @@ __pycache__/
 !/.gitignore
 !/.readthedocs.yaml
 dist/
-.github/
+!.github/
 jcclass.egg-info/

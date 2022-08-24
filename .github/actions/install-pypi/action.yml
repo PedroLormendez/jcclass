@@ -25,8 +25,8 @@ runs:
         python-version: ${{ inputs.python-version }}
         cache: 'pip'
         cache-dependency-path: |
-          ci/${{ inputs.type }}requirements.txt
-          ci/${{ inputs.version-file }}
+          ${{ inputs.type }}requirements.txt
+          ${{ inputs.version-file }}
 
     - name: Setup PROJ
       uses: ./.github/actions/setup-proj
@@ -43,12 +43,12 @@ runs:
 
     - name: Install dependencies
       shell: bash
-      run: python -m pip install -r ci/${{ inputs.type }}_requirements.txt -c ci/${{ inputs.version-file }}
+      run: python -m pip install -r ${{ inputs.type }}requirements.txt -c ${{ inputs.version-file }}
 
-    - name: Install extra dependencies
-      if: ${{ inputs.need-cartopy == 'true' }}
-      shell: bash
-      run: python -m pip install -r ci/extra_requirements.txt -c ci/${{ inputs.version-file }}
+#    - name: Install extra dependencies
+#      if: ${{ inputs.need-cartopy == 'true' }}
+#      shell: bash
+#      run: python -m pip install -r ci/extra_requirements.txt -c ci/${{ inputs.version-file }}
 
     - name: Download Cartopy Maps
       if: ${{ inputs.need-cartopy == 'true' }}

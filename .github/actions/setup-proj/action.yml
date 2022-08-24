@@ -4,7 +4,7 @@ inputs:
   version:
     description: 'What version of PROJ to install'
     required: true
-    default: 8.2.1
+    default: 8.0.0
 runs:
   using: composite
   steps:

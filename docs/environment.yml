@@ -4,10 +4,11 @@ channels:
   - defaults
 dependencies:
   - python>3.5
-  - numpy=1.21.6
+  - pip
+  - numpy>=1.21.6
   - matplotlib
   - xarray
-  - cartopy=0.17.0
+  - cartopy>=0.17.0
   - cftime
   - netCDF4
 

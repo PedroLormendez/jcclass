@@ -15,7 +15,7 @@ runs:
         path: local
         key: proj-${{ runner.os }}-${{ inputs.version }}-0
 
-    - name: Download and build PROJ  
+    - name: Download and build PROJ
       shell: bash
       if: steps.cache-proj.outputs.cache-hit != 'true'
       run: |

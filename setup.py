@@ -29,7 +29,7 @@ setup(
 	#packages =['jcclass'],
 	packages=find_packages(),
 	zip_safe = False,
-	python_requires='>=3.5',
+	python_requires='>=3.8',
 	setuptools_git_versioning ={
 		'version_callback' : vfile['__version__'],
 		'dev_template'  : '{tag}.posst{ccount}',
@@ -37,11 +37,13 @@ setup(
 		},
 	setup_requires = ['setuptools-git-versioning', 'numpy'],
 	install_requires = [
-						'numpy>=1.19.2',
+						'numpy>=1.19.5',
 						'xarray>=0.16.2',
 						'matplotlib>=3.2.0',
+						'pyproj',
 						'cartopy>=0.17.0',
 						'cftime',
-						'netCDF4'
+						'netCDF4',
+						'h5netcdf',
 	]
 	)

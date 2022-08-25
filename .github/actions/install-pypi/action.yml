@@ -61,6 +61,6 @@ runs:
       #shell: bash
       #run: ci/download_cartopy_maps.py
 
-    - name: Install
-      shell: bash
-      run: python -m pip install ${{ inputs.version-file }} .
+#    - name: Install
+#      shell: bash
+#      run: python -m pip install ${{ inputs.version-file }} .

@@ -58,7 +58,7 @@ jobs:
       #    coverage run --source=jcclass -m unittest discover -v -s tests/
       #    coverage xml
 
-      - name: Upload coverage report
-        uses: codecov/codecov-action@v1
-        with:
-          files: ./coverage.xml
+#      - name: Upload coverage report
+#        uses: codecov/codecov-action@v1
+#        with:
+#          files: ./coverage.xml

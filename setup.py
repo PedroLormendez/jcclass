@@ -37,7 +37,7 @@ setup(
 		},
 	setup_requires = ['setuptools-git-versioning', 'numpy'],
 	install_requires = [
-						'numpy>=1.19.5',
+						'numpy==1.14.6',
 						'xarray>=0.16.2',
 						'matplotlib>=3.2.0',
 						'pyproj',

@@ -1,4 +1,8 @@
-# Jenkinson - Collison automated gridded classification for Python
+# Jenkinson - Collison automated gridded classification for Python  
+
+[![version](https://img.shields.io/pypi/v/jcclass?color=f2cc8f&label=PyPI)](https://pypi.org/project/jcclass/)
+[![DOI](https://zenodo.org/badge/524934105.svg)](https://zenodo.org/badge/latestdoi/524934105)
+
 This is an adapted version for python of the __Jenkinson - Collison__ automated classfication based on the original Lamb Weather Types. This gridded version is based on the application made by [Otero](https://link.springer.com/article/10.1007/s00382-017-3705-y) (2018) using a moving central gridded point with  that allows to compute the synoptic circulation types on a gridded Mean Sea Level Pressure (MSLP) domain.
 ![](https://github.com/PedroLormendez/jc_module/blob/main/figs/Circulations_quick.gif)
 ## How does it work?
@@ -50,7 +54,7 @@ Sample datasets from ERA5 is provided and available [here](https://github.com/Pe
 ## Installation
 Simply run in the terminal
 ```
-pip install -i https://test.pypi.org/simple/ jcclass
+pip install jcclass
 ```
 
 ## How to use?
@@ -116,7 +120,7 @@ Detailed documentation and tutorial on the ``jcclass`` module can be found in th
 ## Acknowledging this work
 The code can be used and modified freely without any restriction. If you use it for your own research, I would appreciate if you cite this work as follows:
 
-Herrera-Lormendez, 2022.....
+Herrera-Lormendez P., 2022: PedroLormendez/jcclass: version x.y.z [doi:10.5281/zenodo.7025220](https://zenodo.org/record/7025220#.YwjIKexByWg)
 
 Reports on errors are welcomed by [raising an issue](https://github.com/PedroLormendez/JC-Classification/issues)
 

@@ -2,6 +2,7 @@
 
 [![version](https://img.shields.io/pypi/v/jcclass?color=f2cc8f&label=PyPI)](https://pypi.org/project/jcclass/)
 [![DOI](https://zenodo.org/badge/524934105.svg)](https://zenodo.org/badge/latestdoi/524934105)
+[![downloads](https://img.shields.io/pypi/dm/jcclass?color=f2cc8f)](https://pypi.org/project/jcclass/)
 
 This is an adapted version for python of the __Jenkinson - Collison__ automated classfication based on the original Lamb Weather Types. This gridded version is based on the application made by [Otero](https://link.springer.com/article/10.1007/s00382-017-3705-y) (2018) using a moving central gridded point with  that allows to compute the synoptic circulation types on a gridded Mean Sea Level Pressure (MSLP) domain.
 ![](https://github.com/PedroLormendez/jc_module/blob/main/figs/Circulations_quick.gif)

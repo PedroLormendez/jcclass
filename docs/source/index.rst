@@ -1,7 +1,7 @@
 The automated Jenkinson & Collison classification for Python
 ===================================
 
-**jcclass** is a Python library to derive automated atmospheric surface circulatons
+**jcclass** is a Python library to derive automated atmospheric surface circulations
 based on Mean Sea Level Pressure data. The circulations are derived using the Jenkinson and Collison
 automated classification originally derived from the Lamb Weather types.
 

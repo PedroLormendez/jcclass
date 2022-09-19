@@ -148,7 +148,7 @@ def JC_classification(filename):
         print('Computing flow terms')
         #Computing equations of flows and vorticity                        
         flows = JC_functions.flows(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, sc, zwa, zsc, zwb, lat, lon, time, mslp)
-        del (mslp, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, sc, zwa, zsc, zwb)
+        del (p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, sc, zwa, zsc, zwb)
         gc.collect()
         W  = flows[0] #Westerly flow
         S  = flows[1] #Southerly flow

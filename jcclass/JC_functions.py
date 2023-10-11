@@ -120,7 +120,7 @@ def is_world(data):
     condition_east  = data.lon[-1]>= (180 - dif_lon) #East
     condition_west  = data.lon[0]<= (-180 + dif_lon) #West
     es_mundo = False
-    if condition_west == condition_east:
+    if condition_west and condition_east:
         es_mundo = True
     else:
         pass

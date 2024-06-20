@@ -59,24 +59,11 @@ def JC_classification(filename):
     print('Checking latitude coordinates values...')
     mslp = JC_functions.checking_lat_coords(mslp)
 
-    #Computing factors based on grid size
-    dif_lon = float((mslp.lon[1]-mslp.lon[0]))
-    dif_lat = float((mslp.lat[1]-mslp.lat[0]))
-
-    factor_lat = float(np.abs(1/dif_lat))
-    factor_lon = float(np.abs(1/dif_lon))
-    f_lat1 = int(10*factor_lat)
-    f_lat2 = int(-10*factor_lat)
-    
-    f_lon1 = int(15*factor_lon)
-    f_lon2 = int(-15*factor_lon)
     #Checking if the MSLP data covers the whole world
     answer_globe = JC_functions.is_world(mslp)
-    if answer_globe == True:
-        psl_area=mslp[:,f_lat1:f_lat2, :] 
-    elif answer_globe == False:
-        psl_area=mslp[:,f_lat1:f_lat2, f_lon1:f_lon2]
-        
+    min_lat, max_lat = (-80.0, 80.0)
+    psl_area = mslp.where((mslp.lat >= min_lat) & (mslp.lat <= max_lat), drop=True)
+
     lat = psl_area.lat
     lon = psl_area.lon
     time = psl_area.time.values

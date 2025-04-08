@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-with open("README.md", "r", encoding="utf-8") as fh:
+with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
@@ -17,16 +17,8 @@ setup(
     packages=find_packages(),
     zip_safe=False,
     python_requires=">=3.7",
-    setup_requires=[
-        "setuptools-git-versioning",
-        "numpy"
-    ],
-    setuptools_git_versioning={
-        "enabled": True,
-        "version_file": "jcclass/version.py",
-        "dev_template": "{tag}.post{ccount}",
-        "dirty_template": "{tag}.post{ccount}+dirty"
-    },
+    setuptools_git_versioning=True,
+    setup_requires=["setuptools-git-versioning"],
     install_requires=[
         "numpy>=1.19.5",
         "xarray>=0.16.2",

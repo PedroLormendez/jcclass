@@ -1,5 +1,4 @@
-from .jcclass import jc
-from .version import __version__
+from .compute import compute_cts, eleven_cts
+from .plotting import plot_cts
 
-__author__ = 'Pedro Herrera-Lormendez'
-__email__ = 'peth31@gmail.com'
+__all__ = ["compute_cts", "eleven_cts", "plot_cts"]

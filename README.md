@@ -2,11 +2,9 @@
 
 [![PyPI version fury.io](https://badge.fury.io/py/jcclass.svg)](https://pypi.python.org/pypi/jcclass/)
 [![DOI](https://zenodo.org/badge/524934105.svg)](https://zenodo.org/badge/latestdoi/524934105)
-[![Documentation Status](https://readthedocs.org/projects/pedrolormendez-jcclass/badge/?version=latest)](https://pedrolormendez-jcclass.readthedocs.io/en/latest/?badge=latest)
 [![downloads](https://img.shields.io/pypi/dm/jcclass.svg)](https://pypi.org/project/jcclass/)
 [![PyPI license](https://img.shields.io/pypi/l/jcclass.svg)](https://pypi.python.org/pypi/jcclass/)
 [![Twitter](https://badgen.net/badge/icon/twitter?icon=twitter&label)](https://twitter.com/PedroLormendez)
-
 
 
 This is an adapted version for python of the __Jenkinson - Collison__ automated classfication based on the original Lamb Weather Types. This gridded version is based on the application made by [Otero](https://link.springer.com/article/10.1007/s00382-017-3705-y) (2018) using a moving central gridded point with  that allows to compute the synoptic circulation types on a gridded Mean Sea Level Pressure (MSLP) domain.
@@ -65,52 +63,38 @@ pip install jcclass
 
 ## How to use?
 __Importing the module__
-```py
-from jcclass import jc
+```python
+from jcclass.compute import compute_cts, eleven_cts
+from jcclass.plotting import plot_cts
 ```
 
 __Computing the automated circulation types based on gridded MSLP__
 
 Sample datasets available [here](https://github.com/PedroLormendez/jc_module/tree/main/sample_data).
 
-```py
+```python
+import xarray as xr
 filename = 'era5_daily_lowres.nc'
-cts_27 = jc(filename).classification()
+ds_mslp = xr.open_dataset("sample_data/era5_daily_lowres.nc").msl
+cts_27 = compute_cts(ds_mslp)
 ```
 __Computing the reduced eleven circulation types__
-```py
-cts_11 = jc.eleven_cts(cts_27)
+```python
+cts_11 = eleven_cts(cts_27)
 ```
 __Ploting the circulation types on a map__
-```py
-import xarray as xr
-date = cts_27.time[0] #selecting the first time
-cts = cts_27.sel(time = date)
-fig = jc.plot_cts(cts, *args)
+```python
+# Select a single day
+date = "1979-01-03"
+cts_2d = cts_27.sel(time = date) # selecting one time
+fig = plot_cts(cts_2d, *args)
 ```
-- *cts   : a 2D['lat','lon']  xarray.DataArray of the 27 CTs*
-- **args : int, __optional__ (lat_south, lat_north, lon_west, lon_east)*
+- *cts   : a 2D  xarray.DataArray of the 27 CTs*
+- **args : 
+
+- float, __optional__ (lat_south, lat_north, lon_west, lon_east)*
+- bool, __optional__ (show = True)* False to not show the figure
 ![](https://github.com/PedroLormendez/jc_module/blob/main/figs/plot_cts.png)
-
-__Plotting the circulation types and MSLP contour lines on a map__
-```py
-import xarray as xr
-mslp = xr.open_dataset(filename).sel(time = date)
-fig = jc.plot_cts_mslp(cts, mslp, *args)
-```
-- *cts   : a 2D['lat','lon']  xarray.DataArray of the 27 CTs*  
-- *mslp  : a 2D['lat','lon'] xarray.Dataset of MSLP*  
-- **args : int, __optional__ (lat_south, lat_north, lon_west, lon_east)*  
-![](https://github.com/PedroLormendez/jc_module/blob/main/figs/plot_cts_mslp.png)
-
-__Plotting the circulation types and MSLP contour lines on a Nearside perspective cartopy projection__
-```py
-fig = jc.plot_cts_globe(cts, mslp, *argsglobe)
-```
-- *cts   : a 2D['lat','lon']  xarray.DataArray of the 27 CTs*
-- *mslp  : a 2D['lat','lon'] xarray.Dataset of MSLP*  
-- **argsglobe : int, __optional__ (lat_central=30, lon_central=0)*  
-![](https://github.com/PedroLormendez/jc_module/blob/main/figs/plot_cts_globe.png)
 
 __Saving the figures__
 
@@ -119,9 +103,6 @@ You can save anytime any of the figures using ``fig.savefig``.
 ```py
 fig.savefig('figname.png', dpi = 150)
 ```
-## Documentation
-
-Detailed documentation and tutorial on the ``jcclass`` module can be found in the [Documentation](https://pedrolormendez-jcclass.readthedocs.io/en/latest/index.html)
 
 ## Acknowledging this work
 The code can be used and modified freely without any restriction. If you use it for your own research, I would appreciate if you cite this work as follows:

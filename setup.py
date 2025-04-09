@@ -1,8 +1,14 @@
+from pathlib import Path
 from setuptools import setup, find_packages
+
+this_directory = Path(__file__).parent
+long_description = (this_directory / "README.md").read_text()
 
 setup(
     name='jcclass',
     description='Jenkinson and Collison automated gridded classification',
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     author='Pedro Herrera-Lormendez',
     author_email='peth31@gmail.com',
     url='https://github.com/PedroLormendez/jcclass',

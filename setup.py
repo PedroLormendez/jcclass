@@ -19,4 +19,5 @@ setup(
         'cftime',
         'netCDF4'
     ],
+    setuptools_git_versioning={"enabled": True},
 )

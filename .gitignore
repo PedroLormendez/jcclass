@@ -5,3 +5,4 @@ ci/*
 !.github/
 dist/
 jcclass.egg-info/
+jcclass/_version.py

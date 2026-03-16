@@ -18,6 +18,7 @@ dependencies = [
     "cartopy>=0.17.0",
     "cftime",
     "netCDF4",
+    "tqdm>=4.0.0",
 ]
 
 [project.optional-dependencies]

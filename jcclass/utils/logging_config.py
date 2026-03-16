@@ -1,22 +1,16 @@
 import logging
 
 
-def setup_logger(name: str, level=logging.INFO) -> logging.Logger:
+def setup_logger(name: str) -> logging.Logger:
     """
-    Sets up a logger with a given name and level.
-
-    Args:
-        name (str): Name of the logger.
-        level (int): Logging level (default: logging.INFO).
-
-    Returns:
-        logging.Logger: Configured logger instance.
+    Sets up a library-safe logger.
+    Attaches a NullHandler by default so that log records are silently
+    discarded unless the *application* (not this library) configures logging.
+    Users who want to see log output can do:
+        import logging
+        logging.getLogger("jcclass").setLevel(logging.DEBUG)
     """
     logger = logging.getLogger(name)
-    if not logger.hasHandlers():  # Avoid adding duplicate handlers
-        logger.setLevel(level)
-        handler = logging.StreamHandler()  # Output to console
-        formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-        handler.setFormatter(formatter)
-        logger.addHandler(handler)
+    if not logger.handlers:
+        logger.addHandler(logging.NullHandler())
     return logger

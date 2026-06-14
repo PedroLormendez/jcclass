@@ -5,8 +5,7 @@ import matplotlib.pyplot as plt
 import cartopy.crs as ccrs
 from matplotlib.colors import ListedColormap, BoundaryNorm
 from matplotlib.lines import Line2D
-from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
-import matplotlib.ticker as mticker
+from cartopy.mpl.ticker import LongitudeFormatter, LatitudeFormatter
 
 
 def get_cmap_and_norm():
@@ -65,17 +64,10 @@ def configure_gridlines(ax: plt.Axes) -> None:
     - Gridlines themselves are hidden (no xlines or ylines), only labels are displayed.
     - Gridline locators and formatters are fixed to common global coordinates.
     """
-    gl = ax.gridlines(crs=ccrs.PlateCarree(), draw_labels=True)
-    gl.top_labels = False
-    gl.bottom_labels = True
-    gl.left_labels = True
-    gl.right_labels = False
-    gl.xlines = False  # disables grid lines
-    gl.ylines = False
-    gl.ylocator = mticker.FixedLocator([-80, -60, -40, -20, 0, 20, 40, 60, 80])
-    gl.xlocator = mticker.FixedLocator([-180, -120, -60, 0, 60, 120, 180])
-    gl.xformatter = LONGITUDE_FORMATTER
-    gl.yformatter = LATITUDE_FORMATTER
+    ax.set_xticks([-180, -120, -60, 0, 60, 120, 180], crs=ccrs.PlateCarree())
+    ax.set_yticks([-80, -60, -40, -20, 0, 20, 40, 60, 80], crs=ccrs.PlateCarree())
+    ax.xaxis.set_major_formatter(LongitudeFormatter())
+    ax.yaxis.set_major_formatter(LatitudeFormatter())
 
 
 def add_legend(fig: plt.Figure, ax: plt.Axes) -> None:

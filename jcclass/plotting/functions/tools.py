@@ -75,7 +75,7 @@ def define_colormap() -> ListedColormap:
 
 
 def configure_gridlines(ax: plt.Axes) -> None:
-    gl = ax.gridlines(crs=ccrs.PlateCarree(), draw_labels=True)
+    gl = ax.gridlines(draw_labels=True)
     gl.top_labels = False
     gl.bottom_labels = True
     gl.left_labels = True

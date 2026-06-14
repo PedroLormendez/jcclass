@@ -1,9 +1,46 @@
-cff-version: 1.1.0
-message: "If you use this Python Module, please cite it as below."
+cff-version: 1.2.0
+title: jcclass
+message: "If you use this software, please cite it using the metadata below."
+type: software
 authors:
   - family-names: Herrera-Lormendez
     given-names: Pedro
+    email: peth31@gmail.com
     orcid: https://orcid.org/0000-0003-0982-0032
-title: PedroLormendez/jcclass: v0.0.3
-version: v0.0.3
-date-released: 2022-09-07
+    affiliation: "Interdisciplinary Environmental Research Centre, TU Bergakademie Freiberg, Freiberg, Germany"
+repository-code: https://github.com/PedroLormendez/jcclass
+url: https://github.com/PedroLormendez/jcclass
+abstract: >
+  jcclass is a Python package that implements the gridded Jenkinson-Collison
+  Classification (JCC) to compute synoptic circulation types from gridded
+  mean sea-level pressure (MSLP) data. It classifies atmospheric circulation
+  into 27 types (or 11 aggregated types) based on dominant MSLP features
+  such as cyclones, anticyclones, and their associated wind flow directions.
+keywords:
+  - circulation types
+  - Jenkinson-Collison
+  - synoptic climatology
+  - climate
+  - meteorology
+  - MSLP
+license: MIT
+version: 0.0.10
+date-released: "2026-06-14"
+preferred-citation:
+  type: article
+  authors:
+    - family-names: Herrera-Lormendez
+      given-names: Pedro
+    - family-names: John
+      given-names: Amal
+    - family-names: Douville
+      given-names: Hervé
+    - family-names: Matschullat
+      given-names: Jörg
+  title: "Projected changes in synoptic circulations over Europe and their implications for summer precipitation: A CMIP6 perspective"
+  journal: "International Journal of Climatology"
+  year: 2023
+  volume: 43
+  pages: "3373-3390"
+  doi: 10.1002/joc.8033
+  url: https://rmets.onlinelibrary.wiley.com/doi/10.1002/joc.8033

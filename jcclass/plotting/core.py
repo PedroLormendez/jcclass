@@ -2,6 +2,7 @@ import xarray as xr
 import numpy as np
 import matplotlib.pyplot as plt
 import cartopy.crs as ccrs
+import cartopy.feature as cfeature
 
 from .functions.tools import ensure_2d, crop_area
 from .functions.plot_utils import get_cmap_and_norm, add_legend, get_fig_size, \
@@ -94,7 +95,7 @@ def plot_cts(ds: xr.DataArray,
 
     ax.pcolor(lons, lats, ds, transform=proj, norm=norm, cmap=cmap)
 
-    ax.coastlines('50m')
+    ax.add_feature(cfeature.COASTLINE.with_scale('50m'))
     configure_gridlines(ax)
     add_legend(fig, ax)
 

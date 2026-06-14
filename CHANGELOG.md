@@ -6,12 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ## [v0.0.10] - 2026-06-14
-### Changed
-- `jc_classification()` now shows a progress bar (via `tqdm`) during computation, making it easier to track progress on large datasets.
-- Logging now follows library best practices: a `NullHandler` is attached by default, so no output is printed unless the user explicitly configures logging in their application.
+### Fixed
+- Plotting with custom area (`lat_south`, `lat_north`, etc.) no longer crashes on shapely 2.x / Python 3.11.
+- Axis tick labels now use cartopy's `set_xticks`/`set_yticks` instead of the gridliner, fixing compatibility with newer cartopy versions.
 
 ### Added
+- Progress bar (via `tqdm`) shown during `jc_classification()` computation.
 - `tqdm` added as a package dependency.
+
+### Changed
+- Logging follows library best practices — `NullHandler` by default, no console output unless the user configures it.
 
 ## [v0.0.9] - 2025-04-09
 ### Changed

@@ -95,7 +95,7 @@ def plot_cts(ds: xr.DataArray,
 
     ax.pcolor(lons, lats, ds, transform=proj, norm=norm, cmap=cmap)
 
-    ax.add_feature(cfeature.COASTLINE.with_scale('50m'))
+    ax.add_feature(cfeature.COASTLINE.with_scale('110m'))
     configure_gridlines(ax)
     add_legend(fig, ax)
 

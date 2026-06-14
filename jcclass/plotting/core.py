@@ -71,10 +71,10 @@ def plot_cts(ds: xr.DataArray,
     # Cropping the area
     ds = crop_area(ds, lat_north, lat_south, lon_west, lon_east)
     # Redefining longitude and latitude limit points
-    lat_north = ds.latitude.max()
-    lat_south = ds.latitude.min()
-    lon_west = ds.longitude.min()
-    lon_east = ds.longitude.max()
+    lat_north = float(ds.latitude.max())
+    lat_south = float(ds.latitude.min())
+    lon_west = float(ds.longitude.min())
+    lon_east = float(ds.longitude.max())
 
     # Mask the data to remove the equatorial region
     ds = xr.where((ds.latitude < 10) & (ds.latitude > -10), np.nan, ds)

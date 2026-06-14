@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 
 import cartopy.crs as ccrs
-from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
+from cartopy.mpl.ticker import LongitudeFormatter, LatitudeFormatter
 import matplotlib.ticker as mticker
 from jcclass.utils.logging_config import setup_logger
 logger = setup_logger("jcclass")
@@ -75,14 +75,7 @@ def define_colormap() -> ListedColormap:
 
 
 def configure_gridlines(ax: plt.Axes) -> None:
-    gl = ax.gridlines(draw_labels=True)
-    gl.top_labels = False
-    gl.bottom_labels = True
-    gl.left_labels = True
-    gl.right_labels = False
-    gl.xlines = False
-    gl.ylines = False
-    gl.ylocator = mticker.FixedLocator([-80, -60, -40, -20, 0, 20, 40, 60, 80])
-    gl.xlocator = mticker.FixedLocator([-180, -120, -60, 0, 60, 120, 180])
-    gl.xformatter = LONGITUDE_FORMATTER
-    gl.yformatter = LATITUDE_FORMATTER
+    ax.set_xticks([-180, -120, -60, 0, 60, 120, 180], crs=ccrs.PlateCarree())
+    ax.set_yticks([-80, -60, -40, -20, 0, 20, 40, 60, 80], crs=ccrs.PlateCarree())
+    ax.xaxis.set_major_formatter(LongitudeFormatter())
+    ax.yaxis.set_major_formatter(LatitudeFormatter())

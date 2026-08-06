@@ -1,17 +1,16 @@
 # Jenkinson - Collison automated gridded classification for Python  
 
 [![PyPI version fury.io](https://badge.fury.io/py/jcclass.svg)](https://pypi.python.org/pypi/jcclass/)
-[![DOI](https://zenodo.org/badge/524934105.svg)](https://zenodo.org/badge/latestdoi/524934105)
 [![downloads](https://img.shields.io/pypi/dm/jcclass.svg)](https://pypi.org/project/jcclass/)
 [![PyPI license](https://img.shields.io/pypi/l/jcclass.svg)](https://pypi.python.org/pypi/jcclass/)
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/PedroLormendez/jcclass/blob/main/notebooks/tutorial_era5_arco.ipynb)
 
 
 This is an adapted version for python of the __Jenkinson - Collison__ automated classfication based on the original Lamb Weather Types. This gridded version is based on the application made by [Otero](https://link.springer.com/article/10.1007/s00382-017-3705-y) (2018) using a moving central gridded point with  that allows to compute the synoptic circulation types on a gridded Mean Sea Level Pressure (MSLP) domain.
-![](https://github.com/PedroLormendez/jc_module/blob/main/figs/Circulations_quick.gif)
+![](figs/Circulations_quick.gif)
 ## How does it work?
 The method uses grid-point MSLP data to obtain numerical values of wind flow and vorticity which can be used to determine Cyclonic and Anticyclonic patterns as well as their dominant advective (direction of wind flow) characteristics. The 16 gridded points are moved along the region in reference to a central point where the dominant circulation type will be designated.   
-![](https://github.com/PedroLormendez/jc_module/blob/main/figs/Gridpoints.gif)
+![](figs/Gridpoints.gif)
 
 ## The Circulation Types (CTs)
 The application of the automated classification allows to derive 27 synoptic circulations. 26 of them based on the dominant pressure pattern and wind direction plus a Low Flow (LF) type which is characterised by days when pressure gradients are to weak and a dominant circulation or advective direction can not be assigned.
@@ -62,10 +61,12 @@ pip install jcclass
 ```
 
 ## How to use?
+
+> **Full walkthroughs:** see the [`tutorial_sample_data.ipynb`](https://github.com/PedroLormendez/jcclass/blob/main/notebooks/tutorial_sample_data.ipynb) notebook for the example below using the bundled sample data, or [`tutorial_era5_arco.ipynb`](https://github.com/PedroLormendez/jcclass/blob/main/notebooks/tutorial_era5_arco.ipynb) for computing circulation types directly from the cloud-hosted [ARCO-ERA5](https://github.com/google-research/arco-era5) dataset (no download required). Both notebooks can be run directly in Colab via the badge at the top of this README.
+
 __Importing the module__
 ```python
-from jcclass.compute import compute_cts, eleven_cts
-from jcclass.plotting import plot_cts
+from jcclass import compute_cts, eleven_cts, plot_cts
 ```
 
 __Computing the automated circulation types based on gridded MSLP__
@@ -74,7 +75,6 @@ Sample datasets available [here](https://github.com/PedroLormendez/jc_module/tre
 
 ```python
 import xarray as xr
-filename = 'era5_daily_lowres.nc'
 ds_mslp = xr.open_dataset("sample_data/era5_daily_lowres.nc").msl
 cts_27 = compute_cts(ds_mslp)
 ```
@@ -85,15 +85,14 @@ cts_11 = eleven_cts(cts_27)
 __Ploting the circulation types on a map__
 ```python
 # Select a single day
-date = "1979-01-03"
+date = "1979-01-31"
 cts_2d = cts_27.sel(time = date) # selecting one time
-fig = plot_cts(cts_2d, **)
+fig = plot_cts(cts_2d, show=True)
 ```
-- *cts   : a 2D  xarray.DataArray of the 27 CTs*
-- **args : 
+- *cts_2d : a 2D `xarray.DataArray` of the 27 CTs for a single time step*
+- *show : bool, __optional__ (default `True`)* — set to `False` to return the figure without displaying it
 
-- bool, __optional__ (show = True)* False to not show the figure
-![](https://github.com/PedroLormendez/jc_module/blob/main/figs/plot_cts.png)
+![](figs/plot_cts.png)
 
 __Saving the figures__
 
@@ -108,7 +107,7 @@ The code can be used and modified freely without any restriction. If you use it 
 
 Herrera-Lormendez P., 2022: PedroLormendez/jcclass: version x.y.z [doi:10.5281/zenodo.7025220](https://zenodo.org/record/7025220#.YwjIKexByWg)
 
-Reports on errors are welcomed by [raising an issue](https://github.com/PedroLormendez/JC-Classification/issues)
+Reports on errors are welcomed by [raising an issue](https://github.com/PedroLormendez/jcclass/issues)
 
 ## Further literature on the method
 - Jenkinson AF, Collison FP. 1977. An Initial Climatology of Gales over the North Sea. Synoptic Climatology Branch Memorandum, No. 62., Meteorological Office, Bracknell.

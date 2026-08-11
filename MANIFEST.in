@@ -1,0 +1,4 @@
+prune sample_data
+prune figs
+prune notebooks
+prune docs

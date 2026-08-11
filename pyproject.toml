@@ -27,8 +27,12 @@ dev = ["pytest", "coverage", "flake8"]
 [project.urls]
 Homepage = "https://github.com/PedroLormendez/jcclass"
 
+[tool.setuptools]
+include-package-data = false
+
 [tool.setuptools.packages.find]
 where = ["."]
+include = ["jcclass*"]
 
 [tool.setuptools_scm]
 write_to = "jcclass/_version.py"

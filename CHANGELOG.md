@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [v0.0.11] - 2026-08-11
+### Fixed
+- Published package (wheel and sdist) no longer bundles unrelated repository content. Missing package-discovery restrictions and no `MANIFEST.in` meant `sample_data/`, `notebooks/`, and `figs/` were being swept into every release — the wheel was 36MB and included two ERA5 sample netCDFs, both tutorial notebooks, and two gifs. Added `MANIFEST.in` and restricted `[tool.setuptools.packages.find]` to `jcclass*`; wheel and sdist are now ~24KB each.
+
 ## [v0.0.10] - 2026-06-14
 ### Fixed
 - Plotting with custom area (`lat_south`, `lat_north`, etc.) no longer crashes on shapely 2.x / Python 3.11.

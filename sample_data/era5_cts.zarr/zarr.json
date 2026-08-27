@@ -1,0 +1,226 @@
+{
+  "attributes": {
+    "title": "Jenkinson-Collison circulation types (reduced, 11-class) from ARCO-ERA5",
+    "summary": "Hourly reduced 11-type Jenkinson-Collison circulation type classification computed from ARCO-ERA5 mean sea-level pressure, thinned to ~0.5 deg resolution. Grown incrementally by appending along valid_time; see scripts/build_era5_cts_zarr.py.",
+    "source": "gs://gcp-public-data-arco-era5/ar/full_37-1h-0p25deg-chunk-1.zarr-v3 :: mean_sea_level_pressure, isel step=2",
+    "method": "Jenkinson AF, Collison FP (1977); gridded implementation per Otero N, Sillmann J, Butler T (2018), doi:10.1007/s00382-017-3705-y",
+    "Conventions": "CF-1.8",
+    "references": "https://github.com/PedroLormendez/jcclass",
+    "history": "Created/updated 2026-08-27T18:11:44+00:00 with jcclass 0.0.11.dev1+gfeb329763.d20260625 (scripts/build_era5_cts_zarr.py)"
+  },
+  "zarr_format": 3,
+  "consolidated_metadata": {
+    "kind": "inline",
+    "must_understand": false,
+    "metadata": {
+      "cts_11": {
+        "shape": [
+          264,
+          321,
+          720
+        ],
+        "data_type": "int8",
+        "chunk_grid": {
+          "name": "regular",
+          "configuration": {
+            "chunk_shape": [
+              1,
+              321,
+              720
+            ]
+          }
+        },
+        "chunk_key_encoding": {
+          "name": "default",
+          "configuration": {
+            "separator": "/"
+          }
+        },
+        "fill_value": 0,
+        "codecs": [
+          {
+            "name": "bytes"
+          },
+          {
+            "name": "gzip",
+            "configuration": {
+              "level": 9
+            }
+          }
+        ],
+        "attributes": {
+          "long_name": "Jenkinson-Collison circulation type, reduced (11-class)",
+          "flag_values": [
+            -1,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "flag_meanings": "LF A NE E SE S SW W NW N C",
+          "comment": "Reduced from the 27-type classification by jcclass.eleven_cts; equatorial band masked.",
+          "_FillValue": -128
+        },
+        "dimension_names": [
+          "valid_time",
+          "latitude",
+          "longitude"
+        ],
+        "zarr_format": 3,
+        "node_type": "array",
+        "storage_transformers": []
+      },
+      "latitude": {
+        "shape": [
+          321
+        ],
+        "data_type": "float32",
+        "chunk_grid": {
+          "name": "regular",
+          "configuration": {
+            "chunk_shape": [
+              321
+            ]
+          }
+        },
+        "chunk_key_encoding": {
+          "name": "default",
+          "configuration": {
+            "separator": "/"
+          }
+        },
+        "fill_value": "NaN",
+        "codecs": [
+          {
+            "name": "bytes",
+            "configuration": {
+              "endian": "little"
+            }
+          },
+          {
+            "name": "zstd",
+            "configuration": {
+              "level": 0,
+              "checksum": false
+            }
+          }
+        ],
+        "attributes": {
+          "standard_name": "latitude",
+          "long_name": "latitude",
+          "units": "degrees_north",
+          "_FillValue": "AAAAAAAA+H8="
+        },
+        "dimension_names": [
+          "latitude"
+        ],
+        "zarr_format": 3,
+        "node_type": "array",
+        "storage_transformers": []
+      },
+      "longitude": {
+        "shape": [
+          720
+        ],
+        "data_type": "float32",
+        "chunk_grid": {
+          "name": "regular",
+          "configuration": {
+            "chunk_shape": [
+              720
+            ]
+          }
+        },
+        "chunk_key_encoding": {
+          "name": "default",
+          "configuration": {
+            "separator": "/"
+          }
+        },
+        "fill_value": "NaN",
+        "codecs": [
+          {
+            "name": "bytes",
+            "configuration": {
+              "endian": "little"
+            }
+          },
+          {
+            "name": "zstd",
+            "configuration": {
+              "level": 0,
+              "checksum": false
+            }
+          }
+        ],
+        "attributes": {
+          "standard_name": "longitude",
+          "long_name": "longitude",
+          "units": "degrees_east",
+          "_FillValue": "AAAAAAAA+H8="
+        },
+        "dimension_names": [
+          "longitude"
+        ],
+        "zarr_format": 3,
+        "node_type": "array",
+        "storage_transformers": []
+      },
+      "valid_time": {
+        "shape": [
+          264
+        ],
+        "data_type": "int64",
+        "chunk_grid": {
+          "name": "regular",
+          "configuration": {
+            "chunk_shape": [
+              264
+            ]
+          }
+        },
+        "chunk_key_encoding": {
+          "name": "default",
+          "configuration": {
+            "separator": "/"
+          }
+        },
+        "fill_value": 0,
+        "codecs": [
+          {
+            "name": "bytes",
+            "configuration": {
+              "endian": "little"
+            }
+          },
+          {
+            "name": "zstd",
+            "configuration": {
+              "level": 0,
+              "checksum": false
+            }
+          }
+        ],
+        "attributes": {
+          "standard_name": "time",
+          "long_name": "valid time",
+          "units": "hours since 2010-09-10 00:00:00",
+          "calendar": "proleptic_gregorian"
+        },
+        "dimension_names": [
+          "valid_time"
+        ],
+        "zarr_format": 3,
+        "node_type": "array",
+        "storage_transformers": []
+      }
+    }
+  },
+  "node_type": "group"
+}

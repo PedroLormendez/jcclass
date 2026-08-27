@@ -1,0 +1,63 @@
+{
+  "shape": [
+    264,
+    321,
+    720
+  ],
+  "data_type": "int8",
+  "chunk_grid": {
+    "name": "regular",
+    "configuration": {
+      "chunk_shape": [
+        1,
+        321,
+        720
+      ]
+    }
+  },
+  "chunk_key_encoding": {
+    "name": "default",
+    "configuration": {
+      "separator": "/"
+    }
+  },
+  "fill_value": 0,
+  "codecs": [
+    {
+      "name": "bytes"
+    },
+    {
+      "name": "gzip",
+      "configuration": {
+        "level": 9
+      }
+    }
+  ],
+  "attributes": {
+    "long_name": "Jenkinson-Collison circulation type, reduced (11-class)",
+    "flag_values": [
+      -1,
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "flag_meanings": "LF A NE E SE S SW W NW N C",
+    "comment": "Reduced from the 27-type classification by jcclass.eleven_cts; equatorial band masked.",
+    "_FillValue": -128
+  },
+  "dimension_names": [
+    "valid_time",
+    "latitude",
+    "longitude"
+  ],
+  "zarr_format": 3,
+  "node_type": "array",
+  "storage_transformers": []
+}

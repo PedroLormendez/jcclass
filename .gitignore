@@ -3,6 +3,9 @@ __pycache__/
 ci/*
 !/.gitignore
 !.github/
+!site/.nojekyll
+!site/.npmrc
 dist/
 jcclass.egg-info/
 jcclass/_version.py
+node_modules/

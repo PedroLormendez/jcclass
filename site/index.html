@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>jcclass — Circulation Types</title>
+<link rel="stylesheet" href="css/style.css" />
+<script>
+  // Set the theme before first paint, so there's no flash of the wrong
+  // theme while js/bundle.js (a deferred module) is still loading.
+  (function () {
+    var saved = null;
+    try { saved = localStorage.getItem("theme"); } catch (e) {}
+    var theme = saved || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  })();
+</script>
+</head>
+<body>
+  <header class="top">
+    <div class="eyebrow">jcclass</div>
+    <h1>Circulation types</h1>
+  </header>
+
+  <button id="theme-toggle" type="button" class="icon-btn" aria-label="Switch to dark mode">
+    <svg class="icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <circle cx="12" cy="12" r="4.5"></circle>
+      <line x1="12" y1="1.5" x2="12" y2="4"></line>
+      <line x1="12" y1="20" x2="12" y2="22.5"></line>
+      <line x1="1.5" y1="12" x2="4" y2="12"></line>
+      <line x1="20" y1="12" x2="22.5" y2="12"></line>
+      <line x1="4.2" y1="4.2" x2="6" y2="6"></line>
+      <line x1="18" y1="18" x2="19.8" y2="19.8"></line>
+      <line x1="4.2" y1="19.8" x2="6" y2="18"></line>
+      <line x1="18" y1="6" x2="19.8" y2="4.2"></line>
+    </svg>
+    <svg class="icon-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+  </button>
+
+  <div id="globe"></div>
+
+  <aside id="legend">
+    <div class="legend-title">Types</div>
+    <div id="legend-list"></div>
+  </aside>
+
+  <footer id="timebar">
+    <span id="date-label" class="mono">—</span>
+    <button id="play-btn" type="button" class="icon-btn" aria-label="Play" aria-pressed="false">
+      <span class="icon-play"></span>
+      <span class="icon-pause"></span>
+    </button>
+    <input type="range" id="time-slider" min="0" max="0" value="0" step="1" />
+    <span id="status" class="mono"></span>
+  </footer>
+
+  <script type="module" src="js/bundle.js"></script>
+</body>
+</html>

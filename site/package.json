@@ -1,0 +1,17 @@
+{
+  "name": "jcclass-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "serve": "python3 -m http.server 8900 --directory dist",
+    "dev": "npm run build && npm run serve"
+  },
+  "dependencies": {
+    "three": "^0.185.1",
+    "zarrita": "^0.7.4"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0"
+  }
+}

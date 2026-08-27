@@ -1,7 +1,7 @@
 import numpy as np
 import xarray as xr
 from .data_preparation import read_mslp_file, checking_lon_coords, \
-    checking_lat_coords, is_world
+    checking_lat_coords, is_world, standardize_mslp_units
 from .data_extraction import extract_lat_lon_points, extracting_gridpoints_area, extracting_gridpoints_globe
 from .constants import compute_constants
 from .computation import flows, compute_direction, assign_lwt
@@ -29,6 +29,7 @@ def jc_classification(mslp_data: xr.DataArray) -> xr.DataArray:
         # Step 1: Data preparation
         pbar.set_postfix_str(steps[0])
         mslp_data = read_mslp_file(mslp_data)
+        mslp_data = standardize_mslp_units(mslp_data)
         mslp_data = checking_lat_coords(mslp_data)
         mslp_data = checking_lon_coords(mslp_data)
         time_data = mslp_data.time

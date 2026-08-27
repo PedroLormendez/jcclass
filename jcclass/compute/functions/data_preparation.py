@@ -43,6 +43,38 @@ def read_mslp_file(mslp_data: xr.DataArray) -> xr.DataArray:
     return mslp_data
 
 
+def standardize_mslp_units(mslp_data: xr.DataArray) -> xr.DataArray:
+    """
+    Ensures MSLP is in hectopascals (hPa), converting from Pascals (Pa) if needed.
+
+    ERA5 and most reanalysis/GCM sources store MSLP in Pa (~101325 Pa at sea
+    level), but the classification thresholds in assign_lwt -- notably the
+    Low Flow rule (F < 6 and |Z| < 6) -- are calibrated for hPa-scale
+    pressure differences. Left unconverted, F and Z come out ~100x too
+    large, so the Low Flow threshold is essentially never satisfied: every
+    other circulation type is a ratio between F and Z and so is unaffected
+    by a uniform scale error, but Low Flow uses an absolute threshold and
+    was silently almost never assigned as a result.
+
+    Sea-level pressure is physically always ~850-1100 hPa or ~85000-110000
+    Pa -- the two ranges never overlap -- so checking the data's own
+    magnitude reliably tells Pa from hPa without depending on a `units`
+    attribute that may be missing or wrong. This is also what compute_cts's
+    docstring already documents ("Should be in Pascals (Pa) or Hectopascals
+    (hPa)"); this is what actually makes that promise true.
+
+    Args:
+        mslp_data (xr.DataArray): MSLP data, in either Pa or hPa.
+    Returns:
+        xr.DataArray: MSLP data in hPa.
+    """
+    mean_magnitude = float(np.abs(mslp_data).mean())
+    if mean_magnitude > 10000:
+        mslp_data = mslp_data / 100.0
+        mslp_data.attrs["units"] = "hPa"
+    return mslp_data
+
+
 def checking_lat_coords(mslp_data: xr.DataArray) -> xr.DataArray:
     """
     Ensures the latitude coordinate values are in ascending order (e.g., -90 to 90º).

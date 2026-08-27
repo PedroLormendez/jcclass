@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+### Fixed
+- `compute_cts()` almost never assigned the Low Flow (LF) type on standard ERA5-scale (Pascal) input. MSLP in Pa is ~100x larger than the hPa values the Low Flow rule (`F < 6` and `|Z| < 6`) is calibrated for, so those absolute thresholds were essentially never satisfied — every other circulation type is a *ratio* between `F` and `Z` and so was unaffected by the uniform scale error, but LF was silently near-zero regardless of actual weather. Added `standardize_mslp_units()`, which detects Pa-scale input by magnitude (sea-level pressure is always ~85000-110000 Pa or ~850-1100 hPa, so the two never overlap) and converts to hPa before classification. This is also what `compute_cts()`'s docstring already documented as accepted input ("Should be in Pascals (Pa) or Hectopascals (hPa)") but never actually implemented. On a January 1979 sample, LF share went from ~0% to ~18% of classifications.
 
 ## [v0.0.11] - 2026-08-11
 ### Fixed

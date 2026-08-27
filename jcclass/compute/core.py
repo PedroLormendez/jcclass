@@ -10,7 +10,9 @@ def compute_cts(data_mslp: xr.DataArray) -> xr.DataArray:
     Args:
         data_mslp (xr.DataArray): Input MSLP data as an xarray DataArray.
             - Dimensions: Typically includes "time", "latitude", and "longitude".
-            - Units: Should be in Pascals (Pa) or Hectopascals (hPa).
+            - Units: Pascals (Pa) or Hectopascals (hPa) -- detected automatically
+              from the data's magnitude and converted to hPa internally, since
+              the classification thresholds are calibrated for hPa.
 
     Returns:
         xr.DataArray: Computed circulation types as an xarray DataArray.

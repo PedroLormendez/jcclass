@@ -3,6 +3,7 @@
      and via the explicit toggle, which always wins over the media query. */
   --bg: #eef1f6;
   --panel: rgba(255, 255, 255, 0.82);
+  --panel-translucent: rgba(255, 255, 255, 0.45);
   --border: rgba(20, 27, 39, 0.10);
   --text: #141b27;
   --text-muted: #5b6577;
@@ -19,6 +20,7 @@
   :root:not([data-theme="light"]) {
     --bg: #05070c;
     --panel: rgba(18, 27, 44, 0.72);
+    --panel-translucent: rgba(18, 27, 44, 0.4);
     --border: rgba(255, 255, 255, 0.08);
     --text: #edf1f8;
     --text-muted: #8c98b3;
@@ -35,6 +37,7 @@
 :root[data-theme="dark"] {
   --bg: #05070c;
   --panel: rgba(18, 27, 44, 0.72);
+  --panel-translucent: rgba(18, 27, 44, 0.4);
   --border: rgba(255, 255, 255, 0.08);
   --text: #edf1f8;
   --text-muted: #8c98b3;
@@ -50,6 +53,7 @@
 :root[data-theme="light"] {
   --bg: #eef1f6;
   --panel: rgba(255, 255, 255, 0.82);
+  --panel-translucent: rgba(255, 255, 255, 0.45);
   --border: rgba(20, 27, 39, 0.10);
   --text: #141b27;
   --text-muted: #5b6577;
@@ -80,7 +84,12 @@ html, body {
 
 #globe {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  /* Reserved strip at the bottom for the time bar + author credit, so the
+     globe itself sits a bit higher instead of rendering edge-to-edge. */
+  bottom: 3.2rem;
 }
 #globe canvas {
   display: block;
@@ -108,6 +117,18 @@ h1 {
   font-size: 1.15rem;
   font-weight: 700;
   text-shadow: 0 1px 6px var(--text-shadow-color);
+}
+
+#author {
+  position: fixed;
+  left: 1.1rem;
+  bottom: 1.4rem;
+  z-index: 2;
+  font-size: 0.62rem;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+  text-shadow: 0 1px 6px var(--text-shadow-color);
+  pointer-events: none;
 }
 
 #theme-toggle {
@@ -168,7 +189,7 @@ h1 {
 .legend-row .swatch {
   width: 0.62rem;
   height: 0.62rem;
-  border-radius: 2px;
+  border-radius: 50%;
   flex: none;
 }
 .legend-row .label {
@@ -179,13 +200,13 @@ h1 {
 #timebar {
   position: fixed;
   left: 50%;
-  bottom: 1.4rem;
+  bottom: 2.9rem;
   transform: translateX(-50%);
   z-index: 2;
   display: flex;
   align-items: center;
   gap: 0.8rem;
-  background: var(--panel);
+  background: var(--panel-translucent);
   border: 1px solid var(--border);
   border-radius: 999px;
   padding: 0.55rem 1.1rem;

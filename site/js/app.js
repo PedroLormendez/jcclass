@@ -160,18 +160,30 @@ async function main() {
     }
   }
 
-  playBtn.addEventListener("click", () => {
+  function togglePlaying() {
     if (playing) {
       setPlaying(false);
     } else {
       setPlaying(true);
       playLoop();
     }
-  });
+  }
+
+  playBtn.addEventListener("click", togglePlaying);
 
   slider.addEventListener("input", () => {
     setPlaying(false);
     showDay(Number(slider.value));
+  });
+
+  // Spacebar toggles play/pause from anywhere on the page. preventDefault
+  // stops the page from scrolling and, when focus is on play-btn itself,
+  // stops the browser's native space-activates-button click from also
+  // firing and toggling a second time.
+  window.addEventListener("keydown", (e) => {
+    if (e.code !== "Space" && e.key !== " ") return;
+    e.preventDefault();
+    togglePlaying();
   });
 
   await showDay(store.ntime - 1);

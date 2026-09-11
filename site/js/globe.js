@@ -53,7 +53,7 @@ export class Globe {
 
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
-    this.camera.position.set(0, 0, 5.2);
+    this.camera.position.set(0, 0, 6.2);
 
     this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));

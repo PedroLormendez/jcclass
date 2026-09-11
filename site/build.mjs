@@ -26,7 +26,15 @@ await build({
   outfile: path.join(dist, "js", "bundle.js"),
 });
 
-fs.copyFileSync(path.join(here, "index.html"), path.join(dist, "index.html"));
+// Cache-bust bundle.js/style.css references so a rebuild is never served
+// stale from the browser's HTTP cache (bit us repeatedly in local dev: a
+// plain reload silently kept the previous build).
+const buildId = Date.now();
+let html = fs.readFileSync(path.join(here, "index.html"), "utf8");
+html = html
+  .replace('href="css/style.css"', `href="css/style.css?v=${buildId}"`)
+  .replace('src="js/bundle.js"', `src="js/bundle.js?v=${buildId}"`);
+fs.writeFileSync(path.join(dist, "index.html"), html);
 fs.copyFileSync(path.join(here, ".nojekyll"), path.join(dist, ".nojekyll"));
 fs.cpSync(path.join(here, "css"), path.join(dist, "css"), { recursive: true });
 

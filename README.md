@@ -4,10 +4,14 @@
 [![downloads](https://img.shields.io/pypi/dm/jcclass.svg)](https://pypi.org/project/jcclass/)
 [![PyPI license](https://img.shields.io/pypi/l/jcclass.svg)](https://pypi.python.org/pypi/jcclass/)
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/PedroLormendez/jcclass/blob/main/notebooks/tutorial_era5_arco.ipynb)
+[![Live demo](https://img.shields.io/badge/demo-interactive%20globe-blue)](https://pedrolormendez.github.io/jcclass/)
 
 
 This is an adapted version for python of the __Jenkinson - Collison__ automated classfication based on the original Lamb Weather Types. This gridded version is based on the application made by [Otero](https://link.springer.com/article/10.1007/s00382-017-3705-y) (2018) using a moving central gridded point with  that allows to compute the synoptic circulation types on a gridded Mean Sea Level Pressure (MSLP) domain.
 ![](figs/Circulations_quick.gif)
+
+**[Explore an interactive 3D globe of the circulation types →](https://pedrolormendez.github.io/jcclass/)**
+
 ## How does it work?
 The method uses grid-point MSLP data to obtain numerical values of wind flow and vorticity which can be used to determine Cyclonic and Anticyclonic patterns as well as their dominant advective (direction of wind flow) characteristics. The 16 gridded points are moved along the region in reference to a central point where the dominant circulation type will be designated.   
 ![](figs/Gridpoints.gif)

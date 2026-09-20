@@ -83,4 +83,55 @@ export async function openCtsStore(zarrUrl) {
   });
 }
 
+/**
+ * Same fetch-one-timestep-on-demand pattern as CtsStore, for
+ * era5_mslp.zarr's "mslp" variable (float32 hPa, same grid/time as the CT
+ * archive -- see scripts/build_era5_mslp_zarr.py). Prototype for testing
+ * isobar overlays; not wired into the main CtsStore since the two archives
+ * are independent, differently-typed variables.
+ */
+export class MslpStore {
+  constructor({ mslpArray, lats, lons, dates }) {
+    this.mslpArray = mslpArray;
+    this.lats = lats;
+    this.lons = lons;
+    this.dates = dates;
+  }
+
+  get ntime() {
+    return this.mslpArray.shape[0];
+  }
+
+  /** Fetch + decode one time step's grid. Returns Float32Array of length nlat*nlon, hPa. */
+  async getDay(timeIndex) {
+    const chunk = await zarr.get(this.mslpArray, [timeIndex, null, null]);
+    return chunk.data;
+  }
+}
+
+export async function openMslpStore(zarrUrl) {
+  const store = new zarr.FetchStore(zarrUrl);
+  const location = zarr.root(store);
+
+  const mslpArray = await zarr.open(location.resolve("mslp"), { kind: "array" });
+  const latArray = await zarr.open(location.resolve("latitude"), { kind: "array" });
+  const lonArray = await zarr.open(location.resolve("longitude"), { kind: "array" });
+  const timeArray = await zarr.open(location.resolve("valid_time"), { kind: "array" });
+
+  const [latData, lonData, timeData] = await Promise.all([
+    zarr.get(latArray),
+    zarr.get(lonArray),
+    zarr.get(timeArray),
+  ]);
+
+  const dates = decodeCfTime(timeData.data, timeArray.attrs.units);
+
+  return new MslpStore({
+    mslpArray,
+    lats: Array.from(latData.data),
+    lons: Array.from(lonData.data),
+    dates,
+  });
+}
+
 export { FILL_VALUE };

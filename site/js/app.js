@@ -1,4 +1,4 @@
-import { openCtsStore } from "./data.js";
+import { openCtsStore, openMslpStore } from "./data.js";
 import { Globe } from "./globe.js";
 import { CT_COLORS } from "./ct-types.js";
 
@@ -9,6 +9,9 @@ const CT_LABELS = {
 const CT_ORDER = [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const DATA_URL = new URL("../data/era5_cts.zarr", import.meta.url).href;
+// Prototype MSLP archive matched to the same time steps/grid as era5_cts.zarr
+// (see scripts/build_era5_mslp_zarr.py) -- for testing isobar overlays.
+const MSLP_DATA_URL = new URL("../data/era5_mslp.zarr", import.meta.url).href;
 
 const globeContainer = document.getElementById("globe");
 const legendList = document.getElementById("legend-list");
@@ -113,6 +116,16 @@ async function main() {
   statusEl.textContent = "Loading archive metadata…";
   const store = await openCtsStore(DATA_URL);
 
+  // MSLP archive is a same-scope testing prototype (see MSLP_DATA_URL) --
+  // if it hasn't been built/copied, the CT globe should still work on its
+  // own, just without the isobar overlay.
+  let mslpStore = null;
+  try {
+    mslpStore = await openMslpStore(MSLP_DATA_URL);
+  } catch (err) {
+    console.warn("MSLP archive not available, skipping isobar overlay:", err);
+  }
+
   slider.min = 0;
   slider.max = store.ntime - 1;
   slider.value = store.ntime - 1;
@@ -130,6 +143,18 @@ async function main() {
       if (token !== requestToken) return; // superseded by a newer request
       globe.setDayData(values, store.lats, store.lons);
       statusEl.textContent = "";
+
+      // Isobar overlay is independent of the CT fetch above -- if it's slow
+      // or fails, the CT globe has already rendered and stays usable.
+      if (mslpStore) {
+        mslpStore
+          .getDay(index)
+          .then((mslpValues) => {
+            if (token !== requestToken) return;
+            globe.setMslpData(mslpValues, mslpStore.lats, mslpStore.lons);
+          })
+          .catch((err) => console.warn("Failed to load MSLP time step", index, err));
+      }
     } catch (err) {
       if (token !== requestToken) return;
       console.error("Failed to load time step", index, err);

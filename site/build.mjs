@@ -38,13 +38,20 @@ fs.writeFileSync(path.join(dist, "index.html"), html);
 fs.copyFileSync(path.join(here, ".nojekyll"), path.join(dist, ".nojekyll"));
 fs.cpSync(path.join(here, "css"), path.join(dist, "css"), { recursive: true });
 
-const zarrSrc = path.join(repoRoot, "sample_data", "era5_cts.zarr");
-const zarrDest = path.join(dist, "data", "era5_cts.zarr");
-if (fs.existsSync(zarrSrc)) {
-  fs.cpSync(zarrSrc, zarrDest, { recursive: true });
-  console.log(`copied ${zarrSrc} -> ${zarrDest}`);
-} else {
-  console.warn(`WARNING: ${zarrSrc} not found, site will have no data to load`);
+function copyZarrArchive(name, { required }) {
+  const src = path.join(repoRoot, "sample_data", name);
+  const dest = path.join(dist, "data", name);
+  if (fs.existsSync(src)) {
+    fs.cpSync(src, dest, { recursive: true });
+    console.log(`copied ${src} -> ${dest}`);
+  } else if (required) {
+    console.warn(`WARNING: ${src} not found, site will have no data to load`);
+  }
 }
+
+copyZarrArchive("era5_cts.zarr", { required: true });
+// Isobar-overlay testing prototype (scripts/build_era5_mslp_zarr.py); app.js
+// degrades gracefully if it isn't present, so it's not required here.
+copyZarrArchive("era5_mslp.zarr", { required: false });
 
 console.log("build complete:", dist);

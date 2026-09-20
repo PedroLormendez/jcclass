@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { LAND_RINGS } from "./land.js";
 import { CT_COLORS, hexToRgb } from "./ct-types.js";
+import { computeContours, levelsForRange } from "./contours.js";
 
 const RADIUS = 2;
 const CT_COLORS_RGB = Object.fromEntries(
@@ -26,6 +27,7 @@ const GLOBE_PALETTES = {
     ocean: "#0d1626",
     land: "#22304a",
     coastline: "rgba(255, 255, 255, 0.65)",
+    isobar: "rgba(255, 210, 110, 0.75)",
     stars: true,
     starColor: 0xaab4c8,
   },
@@ -33,6 +35,7 @@ const GLOBE_PALETTES = {
     ocean: "#dce4ef",
     land: "#c3cede",
     coastline: "rgba(20, 27, 39, 0.55)",
+    isobar: "rgba(180, 90, 0, 0.75)",
     stars: false,
     starColor: 0xaab4c8,
   },
@@ -248,9 +251,18 @@ export class Globe {
     const octx = off.getContext("2d");
     const img = octx.createImageData(nlon, nlat);
     for (let i = 0; i < nlat; i++) {
+      // dayValues row i is lats[i] (ascending, south->north), but the off
+      // canvas is drawn top-to-bottom below -- write rows north-first so
+      // row 0 of the raster lands at the top of the canvas (north). Passing
+      // drawImage a negative dHeight to do this flip instead does NOT mirror
+      // the source (verified empirically): it just normalizes to the same
+      // top-to-bottom placement as a positive height, silently flipping the
+      // whole CT layer north/south. Source values are read in original
+      // (unflipped) row order; only the destination row is flipped.
+      const destRow = nlat - 1 - i;
       for (let j = 0; j < nlon; j++) {
         const v = dayValues[i * nlon + j];
-        const p = (i * nlon + j) * 4;
+        const p = (destRow * nlon + j) * 4;
         if (v === -128 || !this.selected.has(v)) {
           img.data[p + 3] = 0;
           continue;
@@ -266,13 +278,14 @@ export class Globe {
 
     const x0 = lonToX(lons[0] - lonStep / 2, w);
     const x1 = lonToX(lons[nlon - 1] + lonStep / 2, w);
-    const y0 = latToY(lats[0] + latStep / 2, h);
-    const y1 = latToY(lats[nlat - 1] - latStep / 2, h);
+    // North edge first (smaller canvas y), matching the now north-first raster.
+    const yTop = latToY(lats[nlat - 1] - latStep / 2, h);
+    const yBottom = latToY(lats[0] + latStep / 2, h);
 
     // Faint wash first, at full coverage, so color still reads between dots.
     ctx.imageSmoothingEnabled = false;
     ctx.globalAlpha = WASH_ALPHA;
-    ctx.drawImage(off, 0, 0, nlon, nlat, x0, y0, x1 - x0, y1 - y0);
+    ctx.drawImage(off, 0, 0, nlon, nlat, x0, yTop, x1 - x0, yBottom - yTop);
     ctx.globalAlpha = 1;
 
     // Then the full-opacity stipple on top: build the color fill on its own
@@ -282,7 +295,7 @@ export class Globe {
     const dctx = this._dataLayerCtx;
     dctx.clearRect(0, 0, w, h);
     dctx.imageSmoothingEnabled = false;
-    dctx.drawImage(off, 0, 0, nlon, nlat, x0, y0, x1 - x0, y1 - y0);
+    dctx.drawImage(off, 0, 0, nlon, nlat, x0, yTop, x1 - x0, yBottom - yTop);
     dctx.globalCompositeOperation = "destination-in";
     dctx.drawImage(this._dotMask, 0, 0);
     dctx.globalCompositeOperation = "source-over";
@@ -290,8 +303,45 @@ export class Globe {
     ctx.drawImage(this._dataLayer, 0, 0);
 
     this._strokeCoastlines();
+    this._drawIsobars();
 
     this.texture.needsUpdate = true;
+  }
+
+  /**
+   * Prototype: overlay isobars from a raw MSLP grid (contours computed
+   * client-side, see contours.js) on top of the CT layer. Independent of
+   * setDayData's CT fetch -- app.js calls this whenever the matching MSLP
+   * time step has loaded, which may be slightly after the CT layer.
+   */
+  setMslpData(values, lats, lons) {
+    this._lastMslp = { values, lats, lons, byLevel: null };
+    if (this._lastDay) {
+      const { dayValues, lats: ctLats, lons: ctLons } = this._lastDay;
+      this.setDayData(dayValues, ctLats, ctLons);
+    }
+  }
+
+  _drawIsobars() {
+    const mslp = this._lastMslp;
+    if (!mslp) return;
+    if (!mslp.byLevel) {
+      const levels = levelsForRange(mslp.values, 4);
+      mslp.byLevel = levels.length ? computeContours(mslp.values, mslp.lats, mslp.lons, levels) : new Map();
+    }
+    const { ctx, texW: w, texH: h } = this;
+    ctx.save();
+    ctx.strokeStyle = GLOBE_PALETTES[this.theme].isobar;
+    ctx.lineWidth = 1.6;
+    ctx.beginPath();
+    for (const segs of mslp.byLevel.values()) {
+      for (const [x0, y0, x1, y1] of segs) {
+        ctx.moveTo(lonToX(x0, w), latToY(y0, h));
+        ctx.lineTo(lonToX(x1, w), latToY(y1, h));
+      }
+    }
+    ctx.stroke();
+    ctx.restore();
   }
 
   setSelected(selectedSet) {
